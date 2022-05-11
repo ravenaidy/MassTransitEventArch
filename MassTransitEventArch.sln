@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4EE3F8E4-5530-4879-9A0A-1609062FD4BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{67621ABF-0631-4224-BAC5-66958D353D99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Login", "Login", "{426611A7-ED96-409A-85DC-52BF1E82000B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginService", "LoginService\LoginService.csproj", "{EB133B93-8A4C-447D-80F0-1316839EBF09}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{426611A7-ED96-409A-85DC-52BF1E82000B} = {4EE3F8E4-5530-4879-9A0A-1609062FD4BE}
+		{EB133B93-8A4C-447D-80F0-1316839EBF09} = {426611A7-ED96-409A-85DC-52BF1E82000B}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB133B93-8A4C-447D-80F0-1316839EBF09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB133B93-8A4C-447D-80F0-1316839EBF09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB133B93-8A4C-447D-80F0-1316839EBF09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB133B93-8A4C-447D-80F0-1316839EBF09}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
