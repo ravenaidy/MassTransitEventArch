@@ -29,8 +29,7 @@ services:
   MassTransitApi:
     image: ${DOCKER_REGISTRY-}masstransitapi
     ports:
-      - "8081:80"
-      - "433:433"
+      - "5000:80"      
     build:
       context: .
       dockerfile: ./MassTransitApi/Dockerfile
