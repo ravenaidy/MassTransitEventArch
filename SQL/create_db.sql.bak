@@ -260,7 +260,6 @@ AS
 BEGIN
     INSERT INTO dbo.[Login] (UserName, [Password])
     VALUES (@Username, @Password)
-	SELECT SCOPE_IDENTITY()
 END
 GO
 

@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace MassTransitApi.Dto
 {
-    public class Account
+    public class Account 
     {
         [Required]
         public string Username { get; set; }

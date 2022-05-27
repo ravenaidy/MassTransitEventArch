@@ -2,26 +2,26 @@
 
 namespace MassTransit.AccountOrchestrator.Events
 {
-    public class RegisterAccount
+    public interface RegisterAccount : CorrelatedBy<Guid>
     {
-        public string Username { get; set; }
+        string Username { get; set; }
      
-        public string Password { get; set; }
+        string Password { get; set; }
 
-        public string Firstname { get; set; }
+        string Firstname { get; set; }
         
-        public string Lastname { get; set; }
+        string Lastname { get; set; }
         
-        public Gender Gender { get; set; }
+        Gender Gender { get; set; }
 
-        public string AddressLine1 { get; set; }
+        string AddressLine1 { get; set; }
         
-        public string AddressLine2 { get; set; }
+        string AddressLine2 { get; set; }
         
-        public string AddressLine3 { get; set; }
+        string AddressLine3 { get; set; }
         
-        public string City { get; set; }
+        string City { get; set; }
         
-        public int PostalCode { get; set; }
+        int PostalCode { get; set; }
     }
 }

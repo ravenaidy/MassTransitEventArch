@@ -2,7 +2,7 @@
 
 namespace MassTransit.AccountOrchestrator.Events
 {
-    public class CreateAccount
+    public record CreateAccount
     {
         public int AccountId { get; set; }
         

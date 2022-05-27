@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddMassTransit(bus =>
 {
     bus.UsingInMemory((context, cfg) => cfg.ConfigureEndpoints(context));
+
     bus.AddRider(rider =>
     {
         rider.AddProducer<Account>(config["Kafka:Config:RegisterAccountTopic"]);

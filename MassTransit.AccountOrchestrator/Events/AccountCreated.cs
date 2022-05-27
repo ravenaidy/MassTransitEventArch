@@ -1,6 +1,6 @@
 ﻿namespace MassTransit.AccountOrchestrator.Events
 {
-    public class AccountCreated
+    public record AccountCreated
     {
         public int AccountId { get; set; }
     }
