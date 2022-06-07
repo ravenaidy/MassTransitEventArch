@@ -10,6 +10,9 @@ using MassTransit.LoginService.Repositories.Contracts;
 using MassTransit.Shared.Infrastructure.AutoMapperExtensions;
 using MassTransit.Shared.Infrastructure.DBConnection;
 using MassTransit.Shared.Infrastructure.DBConnection.Contracts;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((host, services) =>
@@ -28,7 +31,16 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddHostedService<LoginWorker>();
         services.AddMassTransit(bus =>
         {
-            bus.UsingInMemory((context, cfg) => cfg.ConfigureEndpoints(context));
+            bus.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host(config["RabbitMq:Config:Host"], host => 
+                {
+                    host.Username(config["RabbitMq:Config:Username"]);
+                    host.Password(config["RabbitMq:Config:Password"]);
+                });
+                
+                cfg.ConfigureEndpoints(context);
+            });
 
             bus.AddRider(rider =>
             {

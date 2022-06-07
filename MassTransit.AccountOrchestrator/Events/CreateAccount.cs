@@ -19,6 +19,7 @@ namespace MassTransit.AccountOrchestrator.Events
         public string AddressLine3 { get; set; }
         
         public string City { get; set; }
+        public string Country { get; set; }
         
         public int PostalCode { get; set; }
     }

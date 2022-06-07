@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Threading.Tasks;
+using AutoMapper;
 using MassTransit.LoginService.Events;
 using MassTransit.LoginService.Models;
 using MassTransit.LoginService.Repositories.Contracts;

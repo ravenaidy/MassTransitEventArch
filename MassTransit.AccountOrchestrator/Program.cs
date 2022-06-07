@@ -2,6 +2,8 @@ using MassTransit.AccountOrchestrator;
 using MassTransit.AccountOrchestrator.Events;
 using MassTransit.AccountOrchestrator.StateMachine;
 using MassTransit;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((host, services) =>
@@ -11,7 +13,17 @@ var host = Host.CreateDefaultBuilder(args)
 
         services.AddMassTransit(bus =>
             {
-                bus.UsingInMemory((context, cfg) => cfg.ConfigureEndpoints(context));
+                bus.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(config["RabbitMq:Config:Host"], host => 
+                    {
+                        host.Username(config["RabbitMq:Config:Username"]);
+                        host.Password(config["RabbitMq:Config:Password"]);
+                    });
+                
+                    cfg.ConfigureEndpoints(context);
+                });
+                
                 bus.AddRider(rider =>
                 {
                     rider.AddSagaStateMachine<AccountStateMachine, AccountState>().InMemoryRepository();

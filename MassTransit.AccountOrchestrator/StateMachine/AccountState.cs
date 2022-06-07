@@ -1,4 +1,6 @@
-﻿namespace MassTransit.AccountOrchestrator.StateMachine
+﻿using System;
+
+namespace MassTransit.AccountOrchestrator.StateMachine
 {
     public class AccountState : SagaStateMachineInstance
     {

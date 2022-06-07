@@ -26,8 +26,21 @@ services:
       - init-kafka
       - loginservice
       - masstransitapi
+        
+  accountservice:
+    image: ${DOCKER_REGISTRY-}accountservice
+    build:
+      context: .
+      dockerfile: ./MassTransit.Account.AccountService/Dockerfile
+    depends_on:
+      - masstransitdb
+      - zookeeper
+      - kafkabroker
+      - kafka-ui
+      - init-kafka
+      - loginservice
       
-  MassTransitApi:
+  masstransitapi:
     image: ${DOCKER_REGISTRY-}masstransitapi
     ports:
       - "5000:80"      
@@ -87,10 +100,24 @@ services:
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-register-account --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-createlogin --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-logincreated --replication-factor 1 --partitions 1      
+      kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-account-createaccount --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-account-accountcreated --replication-factor 1 --partitions 1
 
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka:kafkabroker --list
-      "
+      "    
+      
+  rabbitmq:    
+    container_name: 'masstransit-rabbit-queue'
+    image: rabbitmq:3.10.5-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=p@ssword123
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    depends_on:
+      - kafkabroker
       
   kafka-ui:
     image: provectuslabs/kafka-ui
@@ -104,3 +131,6 @@ services:
     depends_on:
       - zookeeper
       - kafkabroker 
+      
+  
+    

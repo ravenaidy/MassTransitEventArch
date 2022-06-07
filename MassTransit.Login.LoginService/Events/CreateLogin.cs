@@ -1,4 +1,5 @@
-﻿using MassTransit.LoginService.Models;
+﻿using System;
+using MassTransit.LoginService.Models;
 using MassTransit.Shared.Infrastructure.AutoMapperExtensions.Contracts;
 
 namespace MassTransit.LoginService.Events

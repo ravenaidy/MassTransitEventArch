@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Orchestration", "Orchestrat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit.AccountOrchestrator", "MassTransit.AccountOrchestrator\MassTransit.AccountOrchestrator.csproj", "{ECACF359-461E-47D6-A2E3-B115945FEA90}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Account", "Account", "{04134321-C102-4E33-9D6D-3F843F149AAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit.Account.AccountService", "MassTransit.Account.AccountService\MassTransit.Account.AccountService.csproj", "{009D5680-165A-41D6-8E2F-2FA694116588}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,8 @@ Global
 		{9DA74EBC-EF7B-432A-A514-EFBE169125CA} = {A05EB725-6AD8-4F19-AA8E-EFBE2D3A0983}
 		{1EF90BBB-795F-4045-AB05-496BA36982EA} = {BAC25893-A2A4-426B-8958-1F1E45C90DE9}
 		{ECACF359-461E-47D6-A2E3-B115945FEA90} = {1EF90BBB-795F-4045-AB05-496BA36982EA}
+		{04134321-C102-4E33-9D6D-3F843F149AAC} = {BAC25893-A2A4-426B-8958-1F1E45C90DE9}
+		{009D5680-165A-41D6-8E2F-2FA694116588} = {04134321-C102-4E33-9D6D-3F843F149AAC}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EB133B93-8A4C-447D-80F0-1316839EBF09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -55,5 +61,9 @@ Global
 		{ECACF359-461E-47D6-A2E3-B115945FEA90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECACF359-461E-47D6-A2E3-B115945FEA90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECACF359-461E-47D6-A2E3-B115945FEA90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{009D5680-165A-41D6-8E2F-2FA694116588}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{009D5680-165A-41D6-8E2F-2FA694116588}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{009D5680-165A-41D6-8E2F-2FA694116588}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{009D5680-165A-41D6-8E2F-2FA694116588}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

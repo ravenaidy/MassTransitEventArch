@@ -32,19 +32,36 @@ namespace MassTransit.AccountOrchestrator.StateMachine
                     })
                     .TransitionTo(LoginCreated),
                 When(LoginCreatedEvent)
-                    .TransitionTo(CreateAccount));
+                    .TransitionTo(CreateAccount),
+                When(CreateAccountEvent)
+                    .Produce(context => context.Init<CreateAccount>(new
+                    {
+                        AccountId = context.Saga.AccountId,
+                        FirstName = context.Message.Firstname,
+                        LastName = context.Message.Lastname,
+                        Gender = (int) context.Message.Gender,
+                        AddressLine1 = context.Message.AddressLine1,
+                        AddressLine2 = context.Message.AddressLine2,
+                        AddressLine3 = context.Message.AddressLine3,
+                        City = context.Message.City,
+                        Country = context.Message.Country,
+                        PostalCode = context.Message.PostalCode
+                    }))
+                    .TransitionTo(AccountCreated),
+                When(AccountCreatedEvent).Finalize()
+            );
         }
-
+        
         public State RegisterAccount { get; set; }
         public State CreateLogin { get; set; }
         public State LoginCreated { get; set; }
         public State CreateAccount { get; set; }
-        //public State AccountCreated { get; set; }
+        public State AccountCreated { get; set; }
         
         public Event<RegisterAccount> RegisterAccountEvent { get; private set; }
         public Event<CreateLogin> CreateLoginEvent { get; private set; }
-         public Event<LoginCreated> LoginCreatedEvent { get; private set; }
-        //public Event<CreateAccount> CreateAccountEvent { get; private set; }
-        //public Event<AccountCreated> AccountCreatedEvent { get; private set; }
+        public Event<LoginCreated> LoginCreatedEvent { get; private set; }
+        public Event<CreateAccount> CreateAccountEvent { get; private set; }
+        public Event<AccountCreated> AccountCreatedEvent { get; private set; }
     }
 }

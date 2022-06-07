@@ -1,4 +1,6 @@
-﻿namespace MassTransit.LoginService.Events
+﻿using System;
+
+namespace MassTransit.LoginService.Events
 {
     public class LoginCreated : CorrelatedBy<Guid>
     {

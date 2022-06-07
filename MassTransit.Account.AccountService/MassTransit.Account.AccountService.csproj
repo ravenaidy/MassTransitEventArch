@@ -1,18 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Worker">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-MassTransit.Account.AccountService-A8B8C876-B4AA-4569-A70F-CFFBE9C365F7</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MassTransit" Version="8.0.3" />
-        <PackageReference Include="MassTransit.Abstractions" Version="8.0.3" />
         <PackageReference Include="MassTransit.Kafka" Version="8.0.3" />
         <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MassTransit.Shared.Infrastructure\MassTransit.Shared.Infrastructure.csproj" />
+    </ItemGroup>
 </Project>

@@ -1,5 +1,7 @@
 using MassTransit;
 using MassTransitApi.Dto;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +18,16 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddMassTransit(bus =>
 {
-    bus.UsingInMemory((context, cfg) => cfg.ConfigureEndpoints(context));
+    bus.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(config["RabbitMq:Config:Host"], "/",host => 
+        {
+            host.Username(config["RabbitMq:Config:Username"]);
+            host.Password(config["RabbitMq:Config:Password"]);
+        });
+                
+        cfg.ConfigureEndpoints(context);
+    });
 
     bus.AddRider(rider =>
     {

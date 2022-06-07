@@ -1,4 +1,6 @@
-﻿namespace MassTransit.AccountOrchestrator.Events
+﻿using System;
+
+namespace MassTransit.AccountOrchestrator.Events
 {
     public class LoginCreated : CorrelatedBy<Guid>
     {
