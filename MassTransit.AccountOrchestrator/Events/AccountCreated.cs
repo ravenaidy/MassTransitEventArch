@@ -1,7 +1,7 @@
 ﻿namespace MassTransit.AccountOrchestrator.Events
 {
-    public record AccountCreated
+    public record AccountCreated(Guid CorrelationId) : CorrelatedBy<Guid>
     {
-        public int AccountId { get; set; }
+        public DateTime CreatedTimeStamp { get; set; }
     }
 }

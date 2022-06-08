@@ -1,28 +1,29 @@
-﻿using System;
-using MassTransit.AccountOrchestrator.Models;
+﻿using MassTransit.AccountOrchestrator.Models;
 
 namespace MassTransit.AccountOrchestrator.Events
 {
-    public interface RegisterAccount : CorrelatedBy<Guid>
+    public class RegisterAccount : CorrelatedBy<Guid>
     {
-        string Username { get; set; }
-     
-        string Password { get; set; }
+        public string Username { get; set; }
 
-        string Firstname { get; set; }
-        
-        string Lastname { get; set; }
-        
-        Gender Gender { get; set; }
+        public string Password { get; set; }
 
-        string AddressLine1 { get; set; }
-        
-        string AddressLine2 { get; set; }
-        
-        string AddressLine3 { get; set; }
-        
-        string City { get; set; }
-        
-        int PostalCode { get; set; }
+        public string Firstname { get; set; }
+
+        public string Lastname { get; set; }
+
+        public Gender Gender { get; set; }
+
+        public string AddressLine1 { get; set; }
+
+        public string AddressLine2 { get; set; }
+
+        public string AddressLine3 { get; set; }
+
+        public string City { get; set; }
+        public string Country { get; set; }
+
+        public int PostalCode { get; set; }
+        public Guid CorrelationId { get; }
     }
 }

@@ -2,8 +2,6 @@ using MassTransit.AccountOrchestrator;
 using MassTransit.AccountOrchestrator.Events;
 using MassTransit.AccountOrchestrator.StateMachine;
 using MassTransit;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((host, services) =>
@@ -29,12 +27,19 @@ var host = Host.CreateDefaultBuilder(args)
                     rider.AddSagaStateMachine<AccountStateMachine, AccountState>().InMemoryRepository();
 
                     rider.AddProducer<CreateLogin>(config["Kafka:Config:CreateLoginTopic"]);
+                    rider.AddProducer<CreateAccount>(config["Kafka:Config:CreateAccountTopic"]);
 
                     rider.UsingKafka((context, kafka) =>
                         {
                             kafka.Host(config["Kafka:Config:Host"]);
 
                             kafka.TopicEndpoint<RegisterAccount>(config["Kafka:Config:RegisterAccountTopic"],
+                                config["Kafka:Config:LoginGroup"],
+                                c =>
+                                {
+                                    c.ConfigureSaga<AccountState>(context);
+                                });
+                            kafka.TopicEndpoint<LoginCreated>(config["Kafka:Config:LoginCreatedTopic"],
                                 config["Kafka:Config:LoginGroup"],
                                 c =>
                                 {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MassTransit.Account.AccountService.Events;
 using MassTransit.Account.AccountService.Repositories.Contracts;
 
@@ -10,9 +8,9 @@ namespace MassTransit.Account.AccountService.Consumers
     {
         private readonly IMapper _mapper;
         private readonly IAccountRepository _accountRepository;
-        private readonly ITopicProducer<CreateAccount> _producer;
+        private readonly ITopicProducer<AccountCreated> _producer;
 
-        public CreateAccountConsumer(IAccountRepository accountRepository, IMapper mapper, ITopicProducer<CreateAccount> producer)
+        public CreateAccountConsumer(IAccountRepository accountRepository, IMapper mapper , ITopicProducer<AccountCreated> producer)
         {
             _accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

@@ -1,11 +1,10 @@
-namespace MassTransit.LoginService
+namespace MassTransit.Account.AccountService
 {
-
-    public class LoginWorker : BackgroundService
+    public class AccountWorker : BackgroundService
     {
-        private readonly ILogger<LoginWorker> _logger;
+        private readonly ILogger<AccountWorker> _logger;
 
-        public LoginWorker(ILogger<LoginWorker> logger)
+        public AccountWorker(ILogger<AccountWorker> logger)
         {
             _logger = logger;
         }
@@ -14,7 +13,7 @@ namespace MassTransit.LoginService
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                _logger.LogInformation("AccountWorker running at: {time}", DateTimeOffset.Now);
                 await Task.Delay(10000, stoppingToken);
             }
         }

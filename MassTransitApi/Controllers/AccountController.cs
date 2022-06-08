@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using MassTransit;
+﻿using MassTransit;
 using MassTransitApi.Dto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +20,8 @@ namespace MassTransitApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
+
+            account.CorrelationId = Guid.NewGuid();
             
             await _producer.Produce(account);
             return Ok();

@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using MassTransit;
+
 namespace MassTransitApi.Dto
 {
-    public class Account 
+    public class Account : CorrelatedBy<Guid>
     {
         [Required]
         public string Username { get; set; }
@@ -23,6 +25,10 @@ namespace MassTransitApi.Dto
         [Required]
         public string City { get; set; }
         [Required]
+        public string Country { get; set; }
+        [Required]
         public int PostalCode { get; set; }
+
+        public Guid CorrelationId { get; set; }
     }
 }
