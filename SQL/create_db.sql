@@ -400,7 +400,11 @@ CREATE TABLE [dbo].[Gender](
 GO
 
 
+USE [MassTransitAccountDB]
+GO
 
+INSERT INTO Gender (Gender) VALUES ('Male')
+INSERT INTO Gender (Gender) VALUES ('Female')
 
 USE [MassTransitAccountDB]
 GO

@@ -8,9 +8,7 @@ namespace MassTransit.AccountOrchestrator.StateMachine
         {
             Event(() => RegisterAccountEvent,
                 x => x.CorrelateById(m => m.Message.CorrelationId));
-            Event(() => CreateLoginEvent, x => x.CorrelateById(m => m.Message.CorrelationId));
             Event(() => LoginCreatedEvent,x  => x.CorrelateById(m => m.Message.CorrelationId));
-            Event(() => CreateAccountEvent, x => x.CorrelateById(m => m.Message.CorrelationId));
             Event(() => AccountCreatedEvent, x => x.CorrelateById(m => m.Message.CorrelationId));
 
             InstanceState(x => x.CurrentState, RegisterAccount);
@@ -39,18 +37,9 @@ namespace MassTransit.AccountOrchestrator.StateMachine
 
             During(CreateLogin,
                 When(LoginCreatedEvent)
-                    .Then(context =>
-                    {
-                        context.Saga.AccountId = context.Message.UserId;
-                        context.Saga.AccountCreated = context.Message.LoginCreatedTimeStamp;
-                    })
-                    .TransitionTo(CreateAccount));
-
-            During(CreateAccount,
-                When(LoginCreatedEvent)
                     .Produce(context => context.Init<CreateAccount>(new
                     {
-                        AccountId = context.Saga.AccountId,
+                        AccountId = context.Message.UserId,
                         FirstName = context.Saga.Firstname,
                         LastName = context.Saga.Lastname,
                         Gender = (int)context.Saga.Gender,
@@ -61,10 +50,9 @@ namespace MassTransit.AccountOrchestrator.StateMachine
                         Country = context.Saga.Country,
                         PostalCode = context.Saga.PostalCode
                     }))
-                    .TransitionTo(AccountCreated)
-            );
+                    .TransitionTo(CreateAccount));
 
-            During(AccountCreated,
+            During(CreateAccount,
                 When(AccountCreatedEvent)
                     .Finalize()
             );
@@ -73,12 +61,9 @@ namespace MassTransit.AccountOrchestrator.StateMachine
         public State RegisterAccount { get; set; }
         public State CreateLogin { get; set; }
         public State CreateAccount { get; set; }
-        public State AccountCreated { get; set; }
 
         public Event<RegisterAccount> RegisterAccountEvent { get; private set; }
-        public Event<CreateLogin> CreateLoginEvent { get; private set; }
         public Event<LoginCreated> LoginCreatedEvent { get; private set; }
-        public Event<CreateAccount> CreateAccountEvent { get; private set; }
         public Event<AccountCreated> AccountCreatedEvent { get; private set; }
     }
 }
