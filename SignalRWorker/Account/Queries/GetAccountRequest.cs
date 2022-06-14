@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace MassTransit.SignalR.SignalRService.Account.Queries
+namespace SignalRWorker.Account.Queries
 {
     public class GetAccountRequest : IRequest<Models.Account>
     {

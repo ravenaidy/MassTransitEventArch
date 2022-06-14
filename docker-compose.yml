@@ -118,6 +118,7 @@ services:
       - '15672:15672'
     depends_on:
       - kafkabroker
+      - kafka-ui
       
   kafka-ui:
     image: provectuslabs/kafka-ui

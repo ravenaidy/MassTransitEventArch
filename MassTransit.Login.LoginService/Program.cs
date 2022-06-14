@@ -10,9 +10,6 @@ using MassTransit.LoginService.Repositories.Contracts;
 using MassTransit.Shared.Infrastructure.AutoMapperExtensions;
 using MassTransit.Shared.Infrastructure.DBConnection;
 using MassTransit.Shared.Infrastructure.DBConnection.Contracts;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((host, services) =>
