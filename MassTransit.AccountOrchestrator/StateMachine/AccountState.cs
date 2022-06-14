@@ -1,4 +1,5 @@
-﻿using MassTransit.AccountOrchestrator.Models;
+﻿using System;
+using MassTransit.AccountOrchestrator.Models;
 
 namespace MassTransit.AccountOrchestrator.StateMachine
 {

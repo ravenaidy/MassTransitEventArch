@@ -1,4 +1,5 @@
-﻿using MassTransit.Account.AccountService.Repositories.Contracts;
+﻿using System.Threading.Tasks;
+using MassTransit.Account.AccountService.Repositories.Contracts;
 using MassTransit.Shared.Infrastructure.Dapper;
 using MassTransit.Shared.Infrastructure.DBConnection.Contracts;
 

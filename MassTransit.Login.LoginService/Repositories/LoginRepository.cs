@@ -1,4 +1,5 @@
-﻿using MassTransit.LoginService.Models;
+﻿using System.Threading.Tasks;
+using MassTransit.LoginService.Models;
 using MassTransit.LoginService.Repositories.Contracts;
 using MassTransit.Shared.Infrastructure.Dapper;
 using MassTransit.Shared.Infrastructure.DBConnection.Contracts;

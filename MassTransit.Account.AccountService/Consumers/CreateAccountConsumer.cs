@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Threading.Tasks;
+using AutoMapper;
 using MassTransit.Account.AccountService.Events;
 using MassTransit.Account.AccountService.Repositories.Contracts;
 

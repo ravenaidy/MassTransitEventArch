@@ -2,6 +2,8 @@ using MassTransit.AccountOrchestrator;
 using MassTransit.AccountOrchestrator.Events;
 using MassTransit.AccountOrchestrator.StateMachine;
 using MassTransit;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((host, services) =>
