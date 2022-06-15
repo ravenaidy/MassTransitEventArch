@@ -1,5 +1,10 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using SignalRWorker.Account.Queries;
 
 namespace SignalRWorker
@@ -7,30 +12,23 @@ namespace SignalRWorker
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly IConfiguration _configuration;
         private readonly IMediator _mediator;
-        private HubConnection? hubConnection;
-
-
-        public Worker(ILogger<Worker> logger, IConfiguration configuration, IMediator mediator)
+        private readonly HubConnection _hubConnection;
+        
+        public Worker(HubConnection connection, ILogger<Worker> logger, IMediator mediator)
         {
+            _hubConnection = connection ?? throw new ArgumentNullException(nameof(connection));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            hubConnection = new HubConnectionBuilder()
-                .WithUrl(_configuration["MassTransitHub:Config:Username"])
-                .Build();
-
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
 
-
-                hubConnection.On<GetAccountRequest>("ReceiveGetAccountRequest", (request) =>
+                _hubConnection.On<GetAccountRequest>("ReceiveGetAccountRequest", (request) =>
                 {
                     _mediator.Send(request, stoppingToken);
                 });

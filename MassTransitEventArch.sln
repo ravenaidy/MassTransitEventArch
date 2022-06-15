@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.SignalR.SignalR
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BFF", "BFF", "{9AE673A8-6A9F-409E-A69A-EF13257F60FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRWorker", "SignalRWorker\SignalRWorker.csproj", "{D9DFC440-2DC3-436A-A5E6-459DDA80FB3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit.BFF.SignalRWorker", "MassTransit.BFF.SignalRWorker\MassTransit.BFF.SignalRWorker.csproj", "{D9DFC440-2DC3-436A-A5E6-459DDA80FB3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

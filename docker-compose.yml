@@ -39,6 +39,33 @@ services:
       - kafka-ui
       - init-kafka
       - loginservice
+        
+  signalrhub:
+    image: ${DOCKER_REGISTRY-}signalrhub
+    build:
+      context: .
+      dockerfile: ./MassTransit.SignalR.SignalRService/Dockerfile
+    depends_on:
+      - masstransitdb
+      - zookeeper
+      - kafkabroker
+      - kafka-ui
+      - init-kafka
+      - loginservice
+      
+  bffservice:
+    image: ${DOCKER_REGISTRY-}bffservice
+    build:
+      context: .
+      dockerfile: ./MassTransit.BFF.SignalRWorker/Dockerfile
+    depends_on:
+      - masstransitdb
+      - zookeeper
+      - kafkabroker
+      - kafka-ui
+      - init-kafka
+      - loginservice
+      - signalrhub
       
   masstransitapi:
     image: ${DOCKER_REGISTRY-}masstransitapi

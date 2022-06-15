@@ -7,6 +7,6 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
-app.MapHub<MassTransitHub>("/masstransitHub");
+app.MapHub<MassTransitAccountHub>("/masstransitHub");
 
 app.Run();
