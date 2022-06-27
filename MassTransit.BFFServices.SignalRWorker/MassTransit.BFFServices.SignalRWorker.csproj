@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-SignalRWorker-4CD5A785-DC4F-412F-8399-ABBD4A2608B5</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MassTransit" Version="8.0.3" />
+        <PackageReference Include="MassTransit.Kafka" Version="8.0.3" />
+        <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
+        <PackageReference Include="MediatR" Version="10.0.1" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.6" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    </ItemGroup>   
+    
+    <ItemGroup>
+      <ProjectReference Include="..\MassTransit.Shared.Infrastructure\MassTransit.Shared.Infrastructure.csproj" />
+      <ProjectReference Include="..\MassTransit.SignalR.SignalRService\MassTransit.SignalR.SignalRService.csproj" />
+    </ItemGroup>
+    
+</Project>

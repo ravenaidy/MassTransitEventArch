@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace SignalRWorker.Account.Queries
+namespace MassTransit.BFFServices.SignalRWorker.Account.Queries
 {
-    public class GetAccountRequest : IRequest<Models.Account>
+    public class GetAccountRequest : IRequest<Unit>
     {
         public string Username { get; set; }
         public string Password { get; set; }

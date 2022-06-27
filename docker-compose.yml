@@ -12,12 +12,13 @@ services:
       - kafkabroker     
       - kafka-ui
       - init-kafka
+      - masstransitclient
       
   accountorchservice:
     image: ${DOCKER_REGISTRY-}accountorchservice
     build:
       context: .
-      dockerfile: ./MassTransit.AccountOrchestrator/Dockerfile
+      dockerfile: ./MassTransit.AccountOrchestrator/Dockerfile      
     depends_on:
       - masstransitdb
       - zookeeper
@@ -42,6 +43,8 @@ services:
         
   signalrhub:
     image: ${DOCKER_REGISTRY-}signalrhub
+    ports:
+      - "5002:80"
     build:
       context: .
       dockerfile: ./MassTransit.SignalR.SignalRService/Dockerfile
@@ -57,7 +60,7 @@ services:
     image: ${DOCKER_REGISTRY-}bffservice
     build:
       context: .
-      dockerfile: ./MassTransit.BFF.SignalRWorker/Dockerfile
+      dockerfile: ./MassTransit.BFFServices.SignalRWorker/Dockerfile
     depends_on:
       - masstransitdb
       - zookeeper
@@ -66,6 +69,14 @@ services:
       - init-kafka
       - loginservice
       - signalrhub
+
+  masstransitclient:
+    image: ${DOCKER_REGISTRY-}masstransitclient
+    build:
+      context: .
+      dockerfile: ./masstransit-client-app/Dockerfile
+    ports:
+      - "80:80"    
       
   masstransitapi:
     image: ${DOCKER_REGISTRY-}masstransitapi
@@ -129,7 +140,9 @@ services:
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-logincreated --replication-factor 1 --partitions 1      
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-account-createaccount --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-account-accountcreated --replication-factor 1 --partitions 1
-
+      kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-getlogin --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-account-getaccount --replication-factor 1 --partitions 1
+      
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka:kafkabroker --list
       "    

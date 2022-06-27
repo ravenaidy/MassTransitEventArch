@@ -1,25 +1,26 @@
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using MassTransit.BFFServices.SignalRWorker.Account.Queries;
 using MediatR;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SignalRWorker.Account.Queries;
 
-namespace SignalRWorker
+namespace MassTransit.BFFServices.SignalRWorker
 {
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
         private readonly IMediator _mediator;
         private readonly HubConnection _hubConnection;
-        
-        public Worker(HubConnection connection, ILogger<Worker> logger, IMediator mediator)
+
+        public Worker(ILogger<Worker> logger, IMediator mediator, HubConnection hubConnection)
         {
-            _hubConnection = connection ?? throw new ArgumentNullException(nameof(connection));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _hubConnection = hubConnection ?? throw new ArgumentNullException(nameof(hubConnection));
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -27,12 +28,13 @@ namespace SignalRWorker
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-
-                _hubConnection.On<GetAccountRequest>("ReceiveGetAccountRequest", (request) =>
+                _hubConnection.On<string>("ReceiveGetAccountRequest", (request) =>
                 {
-                    _mediator.Send(request, stoppingToken);
+                    var getAccountRequest = JsonSerializer.Deserialize<GetAccountRequest>(request);
+                    
+                    if (getAccountRequest is not null)
+                        _mediator.Send( getAccountRequest, stoppingToken);
                 });
-
                 await Task.Delay(10000, stoppingToken);
             }
         }
