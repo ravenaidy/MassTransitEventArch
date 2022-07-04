@@ -5,6 +5,7 @@
         public int AccountId { get; init; }
         public string Firstname { get; init; }
         public string Lastname { get; init; }
+        public string Email { get; init; }
         public int Gender { get; init; }
         public string AddressLine1 { get; init; }
         public string AddressLine2 { get; init; }

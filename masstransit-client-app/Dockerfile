@@ -6,12 +6,11 @@ WORKDIR /masstransit-client-app
 COPY ./masstransit-client-app/package*.json ./
 RUN npm install
 
-# Copy rest of the files
-COPY ./masstransit-client-app .
-
 # Build the project
 RUN npm run build
 
+# Copy rest of the files
+COPY ./masstransit-client-app .
 
 FROM nginx:alpine as production-build
 COPY ./masstransit-client-app/.nginx/nginx.conf /etc/nginx/nginx.conf
