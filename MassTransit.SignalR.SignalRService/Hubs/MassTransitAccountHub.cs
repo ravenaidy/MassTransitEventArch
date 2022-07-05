@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using MassTransit.SignalR.SignalRService.DTO;
 using MassTransit.SignalR.SignalRService.Models;
 using Microsoft.AspNetCore.SignalR;
 
@@ -10,9 +11,14 @@ namespace MassTransit.SignalR.SignalRService.Hubs
         {
             await Clients.All.PublishGetAccountRequest(request);
         }
+
         public async Task SendAccount(Account account)
         {
             await Clients.All.PublishAccount(account);
+        }
+        public async Task NewAccountRequest(NewAccountRequest request)
+        {
+            await Clients.All.PublishNewAccountRequest(request);
         }
     }
 }

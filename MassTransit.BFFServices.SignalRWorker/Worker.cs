@@ -2,11 +2,12 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using MassTransit.BFFServices.SignalRWorker.Account.Queries;
+using MassTransit.SignalR.SignalRService.DTO;
 using MediatR;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using GetAccountRequest = MassTransit.BFFServices.SignalRWorker.Account.Queries.GetAccountRequest;
 
 namespace MassTransit.BFFServices.SignalRWorker
 {
@@ -28,13 +29,17 @@ namespace MassTransit.BFFServices.SignalRWorker
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                _hubConnection.On<string>("ReceiveGetAccountRequest", (request) =>
+                
+                _hubConnection.On<GetAccountRequest>("PublishGetAccountRequest", (request) =>
                 {
-                    var getAccountRequest = JsonSerializer.Deserialize<GetAccountRequest>(request);
-                    
-                    if (getAccountRequest is not null)
-                        _mediator.Send( getAccountRequest, stoppingToken);
+                    _mediator.Send(request, stoppingToken);
                 });
+
+                _hubConnection.On<NewAccountRequest>("PublishNewAccountRequest", request =>
+                {
+                    _mediator.Send(request, stoppingToken);
+                });
+                
                 await Task.Delay(10000, stoppingToken);
             }
         }

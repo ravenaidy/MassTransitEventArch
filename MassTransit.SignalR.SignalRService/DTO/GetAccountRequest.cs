@@ -1,4 +1,4 @@
-﻿namespace MassTransit.SignalR.SignalRService.Models
+﻿namespace MassTransit.SignalR.SignalRService.DTO
 {
     public class GetAccountRequest
     {

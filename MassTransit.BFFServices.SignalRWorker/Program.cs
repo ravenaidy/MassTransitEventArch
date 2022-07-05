@@ -1,6 +1,7 @@
 using Confluent.Kafka;
 using MassTransit;
 using MassTransit.BFFServices.SignalRWorker;
+using MassTransit.BFFServices.SignalRWorker.Account.Commands;
 using MassTransit.BFFServices.SignalRWorker.Account.Handlers;
 using MassTransit.BFFServices.SignalRWorker.Account.Queries;
 using MassTransit.BFFServices.SignalRWorker.Consumers;
@@ -40,6 +41,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             {
                 // Producers
                 rider.AddProducer<GetAccountRequest>(config["Kafka:Config:GetLoginTopic"]);
+                rider.AddProducer<NewAccountRequest>(config["Kafka:Config:RegisterAccountTopic"]);
 
                 // Consumers
                 rider.AddConsumer<GetAccountConsumer>();
