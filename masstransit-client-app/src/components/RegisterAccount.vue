@@ -109,7 +109,7 @@ export default {
     async register() {
       const {email, username, password, firstname, gender, addressline1, addressline2, addressline3, city, postalcode, country} = this;
       console.log(this);
-      MasstransitHub.client.invoke("NewAccountRequest", this);
+      MasstransitHub.client.invoke("NewAccountRequest", {email, username, password, firstname, gender, addressline1, addressline2, addressline3, city, postalcode, country});
     }
   },
   mounted() {
