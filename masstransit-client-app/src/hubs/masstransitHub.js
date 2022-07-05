@@ -3,7 +3,7 @@
 class MasstransitHub {
     constructor() {
         this.client = new HubConnectionBuilder()
-            .withUrl("http://localhost:5002/")
+            .withUrl("http://localhost:5002/masstransitHub")
             .build();        
     }
     
