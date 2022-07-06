@@ -6,28 +6,20 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace MassTransit.SignalR.SignalRService.Hubs
 {
-    public class MassTransitAccountHub : Hub<IMassTransitAccountHub>
+    public class MassTransitAccountHub : Hub
     {
         public async Task SendGetAccountRequest(GetAccountRequest request)
         {
-            await Clients.All.PublishGetAccountRequest(request);
+            await Clients.All.SendAsync("PublishGetAccountRequest", request);
         }
 
         public async Task SendAccount(Account account)
         {
-            await Clients.All.PublishAccount(account);
+            await Clients.All.SendAsync("PublishAccount", account);
         }
         public async Task NewAccountRequest(string request)
         {
-            var decodedRequest = JsonSerializer.Deserialize<NewAccountRequest>(request, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
-
-            if (decodedRequest != null)
-            {
-                await Clients.All.PublishNewAccountRequest(decodedRequest);
-            }
+            await Clients.All.SendAsync("PublishNewAccountRequest", request);
         }
     }
 }

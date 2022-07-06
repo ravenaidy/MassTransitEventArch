@@ -21,7 +21,6 @@
     
     <ItemGroup>
       <ProjectReference Include="..\MassTransit.Shared.Infrastructure\MassTransit.Shared.Infrastructure.csproj" />
-      <ProjectReference Include="..\MassTransit.SignalR.SignalRService\MassTransit.SignalR.SignalRService.csproj" />
     </ItemGroup>
     
 </Project>

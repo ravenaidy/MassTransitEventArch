@@ -1,26 +1,21 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
-using MassTransit.SignalR.SignalRService.Hubs;
-using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace MassTransit.BFFServices.SignalRWorker.Consumers
 {
     public class GetAccountConsumer : IConsumer<Models.Account>
     {
-        private readonly IHubContext<MassTransitAccountHub, IMassTransitAccountHub> _hubContext;
-        private readonly IMapper _mapper;
+        private readonly HubConnection _hubContext;
 
-        public GetAccountConsumer(IHubContext<MassTransitAccountHub, IMassTransitAccountHub> hubContext, IMapper mapper)
+        public GetAccountConsumer(HubConnection hubContext)
         {
             _hubContext = hubContext ?? throw new ArgumentNullException(nameof(hubContext));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         
         public async Task Consume(ConsumeContext<Models.Account> context)
         {
-            await _hubContext.Clients.All.PublishAccount(
-                _mapper.Map<MassTransit.SignalR.SignalRService.Models.Account>(context.Message));
+            await _hubContext.InvokeAsync("PublishAccount", context.Message);
         }
     }
 }

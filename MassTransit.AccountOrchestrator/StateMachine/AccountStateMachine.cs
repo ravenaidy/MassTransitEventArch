@@ -26,6 +26,7 @@ namespace MassTransit.AccountOrchestrator.StateMachine
                         context.Saga.Firstname = context.Message.Firstname;
                         context.Saga.Lastname = context.Message.Lastname;
                         context.Saga.Gender = context.Message.Gender;
+                        context.Saga.Email = context.Message.Email;
                     })
                     .Produce(context => context.Init<CreateLogin>(
                         new
@@ -48,7 +49,8 @@ namespace MassTransit.AccountOrchestrator.StateMachine
                         AddressLine3 = context.Saga.AddressLine3,
                         City = context.Saga.City,
                         Country = context.Saga.Country,
-                        PostalCode = context.Saga.PostalCode
+                        PostalCode = context.Saga.PostalCode,
+                        Email = context.Saga.Email
                     }))
                     .TransitionTo(CreateAccount));
 

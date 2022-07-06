@@ -8,6 +8,8 @@ namespace MassTransit.AccountOrchestrator.StateMachine
         public Guid CorrelationId { get; set; }
         public int AccountId { get; set; }
 
+        public string Email { get; set; }
+
         public string Firstname { get; set; }
 
         public string Lastname { get; set; }

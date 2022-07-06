@@ -1,3 +1,4 @@
+using System.Reflection;
 using Confluent.Kafka;
 using MassTransit;
 using MassTransit.BFFServices.SignalRWorker;
@@ -22,8 +23,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             typeof(Account).Assembly);
         
         services.AddHostedService<Worker>();
-        services.AddMediatR(typeof(GetAccountHandler));
-        
+
         services.AddMassTransit(bus =>
         {
             bus.UsingRabbitMq((context, cfg) =>
@@ -58,6 +58,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             });
         });
         
+        services.AddMediatR(Assembly.GetExecutingAssembly());
         services.AddSingleton(sp => new HubConnectionBuilder()
             .WithUrl(config["MassTransitHub:Url"])  
             .WithAutomaticReconnect()
