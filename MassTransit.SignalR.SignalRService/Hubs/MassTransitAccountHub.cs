@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Text.Json;
+using System.Threading.Tasks;
 using MassTransit.SignalR.SignalRService.DTO;
 using MassTransit.SignalR.SignalRService.Models;
 using Microsoft.AspNetCore.SignalR;
@@ -16,9 +17,17 @@ namespace MassTransit.SignalR.SignalRService.Hubs
         {
             await Clients.All.PublishAccount(account);
         }
-        public async Task NewAccountRequest(NewAccountRequest request)
+        public async Task NewAccountRequest(string request)
         {
-            await Clients.All.PublishNewAccountRequest(request);
+            var decodedRequest = JsonSerializer.Deserialize<NewAccountRequest>(request, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            if (decodedRequest != null)
+            {
+                await Clients.All.PublishNewAccountRequest(decodedRequest);
+            }
         }
     }
 }

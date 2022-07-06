@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="input_field select_option">
-              <select v-model="gender" required>
+              <select v-model.number="gender" required>
                 <option value="">Select gender</option>
                 <option value="1">Male</option>
                 <option value="2">Female</option>
@@ -64,7 +64,7 @@
               </div>
               <div class="col_half">
                 <div class="input_field"> <span><i aria-hidden="true" class="fa fa-address-book"></i></span>
-                  <input type="text" v-model="postalcode" placeholder="Postal Code" required>
+                  <input type="text" v-model.number="postalcode" placeholder="Postal Code" required>
                 </div>
               </div>
             </div>
@@ -107,9 +107,9 @@ export default {
     }  },
   methods: {
     async register() {
-      const {email, username, password, firstname, gender, addressline1, addressline2, addressline3, city, postalcode, country} = this;
+      const {email, username, password, firstname, lastname, gender, addressline1, addressline2, addressline3, city, postalcode, country} = this;
       console.log(this);
-      MasstransitHub.client.invoke("NewAccountRequest", {email, username, password, firstname, gender, addressline1, addressline2, addressline3, city, postalcode, country});
+      MasstransitHub.client.invoke("NewAccountRequest",  JSON.stringify({email, username, password, firstname, lastname, gender, addressline1, addressline2, addressline3, city, postalcode, country}));
     }
   },
   mounted() {

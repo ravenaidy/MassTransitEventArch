@@ -26,6 +26,8 @@ namespace MassTransit.BFFServices.SignalRWorker
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            await _hubConnection.StartAsync(stoppingToken);
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);

@@ -5,14 +5,21 @@ using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSignalR();
 
+const string corsPolicy = "defaultPolicy";
+
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy(corsPolicy,
+        policy => policy
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .WithOrigins("http://localhost")
+            .AllowCredentials());
+});
+
 var app = builder.Build();
 
-app.UseCors(opt =>
-    opt.AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod()
-);
-    
+app.UseCors(corsPolicy);
 
 app.MapHub<MassTransitAccountHub>("/masstransitHub");
 
