@@ -9,6 +9,8 @@ using MassTransit.BFFServices.SignalRWorker.Models;
 using MassTransit.Shared.Infrastructure.AutoMapperExtensions;
 using MediatR;
 using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((host, services) =>

@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import RegisterAccount from "@/components/RegisterAccount";
+import RegisterAccount from "@/components/Account/RegisterAccount";
 
 export default {
   name: 'App',

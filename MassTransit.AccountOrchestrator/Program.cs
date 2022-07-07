@@ -30,6 +30,7 @@ var host = Host.CreateDefaultBuilder(args)
 
                     rider.AddProducer<CreateLogin>(config["Kafka:Config:CreateLoginTopic"]);
                     rider.AddProducer<CreateAccount>(config["Kafka:Config:CreateAccountTopic"]);
+                    rider.AddProducer<AccountCreated>(config["Kafka:Config:AccountCreatedTopic"]);
 
                     rider.UsingKafka((context, kafka) =>
                         {

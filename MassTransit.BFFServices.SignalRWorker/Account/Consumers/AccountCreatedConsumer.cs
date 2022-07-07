@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
+using System.Threading.Tasks;
 using MassTransit.BFFServices.SignalRWorker.Account.Commands;
 using Microsoft.AspNetCore.SignalR.Client;
 

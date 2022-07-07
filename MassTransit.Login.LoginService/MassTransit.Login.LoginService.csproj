@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
+        <ImplicitUsings>disable</ImplicitUsings>
         <UserSecretsId>dotnet-LoginService-EB8B4298-11D6-45ED-8EBF-6BA09D507797</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <RootNamespace>MassTransit.LoginService</RootNamespace>

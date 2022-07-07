@@ -1,4 +1,6 @@
-﻿namespace MassTransit.BFFServices.SignalRWorker.Account.Commands
+﻿using System;
+
+namespace MassTransit.BFFServices.SignalRWorker.Account.Commands
 {
     public class AccountCreated
     {

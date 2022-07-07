@@ -13,9 +13,11 @@
     "core-js": "^3.8.3",
     "jest": "^28.1.1",
     "jest-editor-support": "^30.1.0",
-    "vue": "^3.2.13"
+    "vue": "^3.2.13",
+    "vue-router": "^4.1.1"
   },
   "devDependencies": {
+    "@aspnet/signalr": "^1.0.27",
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
     "@vue/cli-plugin-babel": "~5.0.0",
@@ -24,8 +26,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "node-sass": "^7.0.1",
-    "sass-loader": "^13.0.2",
-    "@aspnet/signalr": "^1.0.27"
+    "sass-loader": "^13.0.2"
   },
   "eslintConfig": {
     "root": true,

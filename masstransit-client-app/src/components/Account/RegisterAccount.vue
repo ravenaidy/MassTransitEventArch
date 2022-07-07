@@ -85,8 +85,7 @@
 </template>
 
 <script>
-
-import MasstransitHub from "@/hubs/masstransitHub";
+import masstransitHub from "@/hubs/masstransitHub";
 
 export default {
   name: "RegisterAccount",  
@@ -109,11 +108,16 @@ export default {
     async register() {
       const {email, username, password, firstname, lastname, gender, addressline1, addressline2, addressline3, city, postalcode, country} = this;
       console.log(this);
-      MasstransitHub.client.invoke("NewAccountRequest",  JSON.stringify({email, username, password, firstname, lastname, gender, addressline1, addressline2, addressline3, city, postalcode, country}));
+      masstransitHub.client.invoke("NewAccountRequest",  JSON.stringify({email, username, password, firstname, lastname, gender, addressline1, addressline2, addressline3, city, postalcode, country}));
     }
   },
   mounted() {
-    MasstransitHub.start();
+    masstransitHub.start();
+    
+    masstransitHub.client.on("PublishAccountCreated", function (request) {
+      console.log(request);
+      this.$router.push("/AccountRegistered");
+    });
   }
 }
 </script>
