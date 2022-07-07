@@ -6,6 +6,7 @@ namespace MassTransit.Account.AccountService.Events
     public class CreateAccount : CorrelatedBy<Guid>, IMapTo<Models.Account>
     {
         public int AccountId { get; init; }
+        public string Email { get; init; }
         public string Firstname { get; init; }
         public string Lastname { get; init; }
         public int Gender { get; init; }

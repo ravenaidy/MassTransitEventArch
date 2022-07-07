@@ -3,17 +3,14 @@ using Confluent.Kafka;
 using MassTransit;
 using MassTransit.BFFServices.SignalRWorker;
 using MassTransit.BFFServices.SignalRWorker.Account.Commands;
-using MassTransit.BFFServices.SignalRWorker.Account.Handlers;
+using MassTransit.BFFServices.SignalRWorker.Account.Consumers;
 using MassTransit.BFFServices.SignalRWorker.Account.Queries;
-using MassTransit.BFFServices.SignalRWorker.Consumers;
 using MassTransit.BFFServices.SignalRWorker.Models;
 using MassTransit.Shared.Infrastructure.AutoMapperExtensions;
 using MediatR;
 using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
-IHost host = Host.CreateDefaultBuilder(args)
+var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((host, services) =>
     {
         var config = host.Configuration;
@@ -45,6 +42,7 @@ IHost host = Host.CreateDefaultBuilder(args)
 
                 // Consumers
                 rider.AddConsumer<GetAccountConsumer>();
+                rider.AddConsumer<AccountCreatedConsumer>();
                 rider.UsingKafka((context, kafka) =>
                 {
                     kafka.Host(config["Kafka:Config:Host"]);
@@ -53,6 +51,11 @@ IHost host = Host.CreateDefaultBuilder(args)
                     {
                         c.AutoOffsetReset = AutoOffsetReset.Earliest;
                         c.ConfigureConsumer<GetAccountConsumer>(context);
+                    });
+                    kafka.TopicEndpoint<AccountCreated>(config["Kafka:Config:AccountCreatedTopic"], config["Kafka:Config:SignalRGroup"], c =>
+                    {
+                        c.AutoOffsetReset = AutoOffsetReset.Earliest;
+                        c.ConfigureConsumer<AccountCreatedConsumer>(context);
                     });
                 });
             });

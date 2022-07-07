@@ -29,31 +29,36 @@ namespace MassTransit.BFFServices.SignalRWorker
         {
             await _hubConnection.StartAsync(stoppingToken);
 
+            _hubConnection.On<GetAccountRequest>("PublishGetAccountRequest", (request) =>
+            {
+                //_mediator.Send(request, stoppingToken);
+            });
+
+            _hubConnection.On<string>("PublishNewAccountRequest", async request =>
+            {
+                var newRegistration = JsonSerializer.Deserialize<NewAccountRequest>(request,
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+
+                if (newRegistration is null) return;
+
+                await ProcessSignalRMessage(newRegistration, stoppingToken);
+            });
+
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                
-                _hubConnection.On<GetAccountRequest>("PublishGetAccountRequest", (request) =>
-                {
-                    //_mediator.Send(request, stoppingToken);
-                });
-
-                _hubConnection.On<string>("PublishNewAccountRequest", async request =>
-                {
-                    var newRegistration = JsonSerializer.Deserialize<NewAccountRequest>(request,
-                        new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        });
-                    if (newRegistration is null) return;
-
-                    using var scope = _scopeFactory.CreateScope();
-                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                    await mediator.Send(newRegistration, stoppingToken);
-                });
-                
                 await Task.Delay(10000, stoppingToken);
             }
+        }
+
+        private async Task ProcessSignalRMessage<T>(T message, CancellationToken stoppingToken) where T : notnull
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+            await mediator.Send(message, stoppingToken);
         }
     }
 }

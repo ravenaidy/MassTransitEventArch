@@ -56,6 +56,11 @@ namespace MassTransit.AccountOrchestrator.StateMachine
 
             During(CreateAccount,
                 When(AccountCreatedEvent)
+                    .Produce(context => context.Init<AccountCreated>(new
+                    {
+                        IsCreated = true,
+                        CreatedTimeStamp = context.Message.CreatedTimeStamp
+                    }))
                     .Finalize()
             );
         }

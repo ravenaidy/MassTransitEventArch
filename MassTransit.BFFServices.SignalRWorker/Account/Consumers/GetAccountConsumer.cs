@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR.Client;
+﻿using Microsoft.AspNetCore.SignalR.Client;
 
-namespace MassTransit.BFFServices.SignalRWorker.Consumers
+namespace MassTransit.BFFServices.SignalRWorker.Account.Consumers
 {
     public class GetAccountConsumer : IConsumer<Models.Account>
     {

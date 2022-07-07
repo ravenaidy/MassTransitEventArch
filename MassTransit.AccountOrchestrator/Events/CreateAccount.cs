@@ -6,6 +6,7 @@ namespace MassTransit.AccountOrchestrator.Events
     public record CreateAccount : CorrelatedBy<Guid>
     {
         public int AccountId { get; set; }
+        public string Email { get; set; }
         
         public string Firstname { get; set; }
         

@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SignalR", "SignalR", "{D7AA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.SignalR.SignalRService", "MassTransit.SignalR.SignalRService\MassTransit.SignalR.SignalRService.csproj", "{39D0C1B8-6739-410B-90F9-4A7984FF6988}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BBFServices", "BBFServices", "{F38FE986-5B51-4FE0-927E-8EED907B361D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BFFServices", "BFFServices", "{F38FE986-5B51-4FE0-927E-8EED907B361D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.BFFServices.SignalRWorker", "MassTransit.BFFServices.SignalRWorker\MassTransit.BFFServices.SignalRWorker.csproj", "{CA8B76E2-F48D-4E31-B09D-2983FD027E3D}"
 EndProject
