@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.SignalR.Client;
 
 namespace MassTransit.BFFServices.SignalRWorker.Account.Consumers
 {
-    public class AccountCreatedConsumer : IConsumer<AccountCreated>
+    public class AccountRegisteredConsumer : IConsumer<AccountCreated>
     {
         private readonly HubConnection _hubContext;
 
-        public AccountCreatedConsumer(HubConnection hubContext)
+        public AccountRegisteredConsumer(HubConnection hubContext)
         {
             _hubContext = hubContext ?? throw new ArgumentNullException(nameof(hubContext));
         }
 
         public async Task Consume(ConsumeContext<AccountCreated> context)
         {
-            await _hubContext.InvokeAsync("AccountCreated", JsonSerializer.Serialize(context.Message,
+            await _hubContext.InvokeAsync("SendAccountCreated", JsonSerializer.Serialize(context.Message,
                 new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true,

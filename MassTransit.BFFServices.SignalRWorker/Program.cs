@@ -44,7 +44,7 @@ var host = Host.CreateDefaultBuilder(args)
 
                 // Consumers
                 rider.AddConsumer<GetAccountConsumer>();
-                rider.AddConsumer<AccountCreatedConsumer>();
+                rider.AddConsumer<AccountRegisteredConsumer>();
                 rider.UsingKafka((context, kafka) =>
                 {
                     kafka.Host(config["Kafka:Config:Host"]);
@@ -54,10 +54,10 @@ var host = Host.CreateDefaultBuilder(args)
                         c.AutoOffsetReset = AutoOffsetReset.Earliest;
                         c.ConfigureConsumer<GetAccountConsumer>(context);
                     });
-                    kafka.TopicEndpoint<AccountCreated>(config["Kafka:Config:AccountCreatedTopic"], config["Kafka:Config:SignalRGroup"], c =>
+                    kafka.TopicEndpoint<AccountCreated>(config["Kafka:Config:AccountRegisteredTopic"], config["Kafka:Config:SignalRGroup"], c =>
                     {
                         c.AutoOffsetReset = AutoOffsetReset.Earliest;
-                        c.ConfigureConsumer<AccountCreatedConsumer>(context);
+                        c.ConfigureConsumer<AccountRegisteredConsumer>(context);
                     });
                 });
             });

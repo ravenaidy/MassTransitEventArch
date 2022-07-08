@@ -48,6 +48,13 @@ var host = Host.CreateDefaultBuilder(args)
                                 {
                                     c.ConfigureSaga<AccountState>(context);
                                 });
+
+                            kafka.TopicEndpoint<AccountCreated>(config["Kafka:Config:AccountRegisteredTopic"],
+                                config["Kafka:Config:LoginGroup"],
+                                c =>
+                                {
+                                    c.ConfigureSaga<AccountState>(context);
+                                });
                         }
                     );
                 });
