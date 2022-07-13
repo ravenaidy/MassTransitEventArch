@@ -1,11 +1,15 @@
 using MassTransit.SignalR.SignalRService.Hubs;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddSignalR();
 
 const string corsPolicy = "defaultPolicy";
+
+var configuration = builder.Configuration;
 
 builder.Services.AddCors(opt =>
 {
@@ -13,7 +17,7 @@ builder.Services.AddCors(opt =>
         policy => policy
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .WithOrigins("http://localhost")
+            .WithOrigins(configuration.GetValue<string>("CorsUrl"))
             .AllowCredentials());
 });
 

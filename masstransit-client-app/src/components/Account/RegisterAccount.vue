@@ -88,7 +88,7 @@
 import masstransitHub from "@/hubs/masstransitHub";
 
 export default {
-  name: "RegisterAccount",  
+  name: "RegisterAccount",
   data() {
     return {
       email: "",
@@ -101,23 +101,50 @@ export default {
       addressline2: "",
       addressline3: "",
       city: "",
-      postalcode: "",    
-      country: ""      
-    }  },
-  methods: {
-      async register() {
-          const { email, username, password, firstname, lastname, gender, addressline1, addressline2, addressline3, city, postalcode, country } = this;
-          // TODO::: send message as object and not string
-          masstransitHub.client.invoke("SendNewAccountRequest", JSON.stringify({ email, username, password, firstname, lastname, gender, addressline1, addressline2, addressline3, city, postalcode, country }));
+      postalcode: "",
+      country: ""
     }
   },
-  mounted() {
-    masstransitHub.start();
-    
-      masstransitHub.client.on("PublishAccountCreated", function (request) {
-          console.log(request);
-          this.$router.push("/AccountRegistered");
-      });
+  methods: {
+    async register() {
+      const {
+        email,
+        username,
+        password,
+        firstname,
+        lastname,
+        gender,
+        addressline1,
+        addressline2,
+        addressline3,
+        city,
+        postalcode,
+        country
+      } = this;
+      
+      masstransitHub.client.invoke("SendNewAccountRequest", JSON.stringify({
+        email,
+        username,
+        password,
+        firstname,
+        lastname,
+        gender,
+        addressline1,
+        addressline2,
+        addressline3,
+        city,
+        postalcode,
+        country
+      }));
+    }
+  },
+  mounted() {    
+    masstransitHub.start(); 
+
+    masstransitHub.client.on("PublishAccountCreated", async request => {
+      let isUserRegistered = await JSON.parse(request);      
+      this.$emit('registered-account', isUserRegistered.isRegistered);
+    });
   }
 }
 </script>

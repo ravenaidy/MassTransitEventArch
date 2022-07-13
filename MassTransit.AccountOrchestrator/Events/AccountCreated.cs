@@ -2,8 +2,10 @@
 
 namespace MassTransit.AccountOrchestrator.Events
 {
-    public record AccountCreated(Guid CorrelationId) : CorrelatedBy<Guid>
+    public class AccountCreated : CorrelatedBy<Guid>
     {
-        public DateTime CreatedTimeStamp { get; set; }
+        public bool IsRegistered { get; init; }
+        public DateTime CreatedTimeStamp { get; init; }
+        public Guid CorrelationId { get; }
     }
 }

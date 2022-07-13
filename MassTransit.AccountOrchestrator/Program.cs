@@ -30,7 +30,7 @@ var host = Host.CreateDefaultBuilder(args)
 
                     rider.AddProducer<CreateLogin>(config["Kafka:Config:CreateLoginTopic"]);
                     rider.AddProducer<CreateAccount>(config["Kafka:Config:CreateAccountTopic"]);
-                    rider.AddProducer<AccountCreated>(config["Kafka:Config:AccountCreatedTopic"]);
+                    rider.AddProducer<AccountCreated>(config["Kafka:Config:AccountRegisteredTopic"]);
 
                     rider.UsingKafka((context, kafka) =>
                         {
@@ -49,7 +49,7 @@ var host = Host.CreateDefaultBuilder(args)
                                     c.ConfigureSaga<AccountState>(context);
                                 });
 
-                            kafka.TopicEndpoint<AccountCreated>(config["Kafka:Config:AccountRegisteredTopic"],
+                            kafka.TopicEndpoint<AccountCreated>(config["Kafka:Config:AccountCreatedTopic"],
                                 config["Kafka:Config:LoginGroup"],
                                 c =>
                                 {

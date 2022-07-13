@@ -11,5 +11,4 @@ class MasstransitHub {
         this.client.start();
     }
 }
-
 export default new MasstransitHub()

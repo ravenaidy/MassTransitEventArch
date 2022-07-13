@@ -58,11 +58,13 @@ namespace MassTransit.AccountOrchestrator.StateMachine
                 When(AccountCreatedEvent)
                     .Produce(context => context.Init<AccountCreated>(new
                     {
-                        IsCreated = true,
+                        IsRegistered = true,
                         CreatedTimeStamp = context.Message.CreatedTimeStamp
                     }))
                     .Finalize()
             );
+
+            SetCompletedWhenFinalized();
         }
         
         public State RegisterAccount { get; set; }

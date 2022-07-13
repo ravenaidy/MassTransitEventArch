@@ -2,9 +2,9 @@
 
 namespace MassTransit.BFFServices.SignalRWorker.Account.Commands
 {
-    public class AccountCreated
+    public class AccountRegistered
     {
-        public bool IsCreated { get; set; }
+        public bool IsRegistered { get; set; }
         public DateTime CreatedTimeStamp { get; set; }
     }
 }

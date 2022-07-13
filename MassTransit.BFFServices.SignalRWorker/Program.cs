@@ -54,7 +54,7 @@ var host = Host.CreateDefaultBuilder(args)
                         c.AutoOffsetReset = AutoOffsetReset.Earliest;
                         c.ConfigureConsumer<GetAccountConsumer>(context);
                     });
-                    kafka.TopicEndpoint<AccountCreated>(config["Kafka:Config:AccountRegisteredTopic"], config["Kafka:Config:SignalRGroup"], c =>
+                    kafka.TopicEndpoint<AccountRegistered>(config["Kafka:Config:AccountRegisteredTopic"], config["Kafka:Config:SignalRGroup"], c =>
                     {
                         c.AutoOffsetReset = AutoOffsetReset.Earliest;
                         c.ConfigureConsumer<AccountRegisteredConsumer>(context);
