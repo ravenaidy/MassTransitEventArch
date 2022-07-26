@@ -13,6 +13,8 @@ namespace MassTransit.BFFServices.SignalRWorker.Account.Commands
         public string Firstname { get; set; }
      
         public string Lastname { get; set; }
+
+        public int PhoneNumber { get; set; }
      
         public int Gender { get; set; }
 

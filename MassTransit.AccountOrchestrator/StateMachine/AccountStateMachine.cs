@@ -20,7 +20,7 @@ namespace MassTransit.AccountOrchestrator.StateMachine
                         context.Saga.AddressLine1 = context.Message.AddressLine1;
                         context.Saga.AddressLine2 = context.Message.AddressLine2;
                         context.Saga.AddressLine3 = context.Message.AddressLine3;
-                        context.Saga.City = context.Message.City;
+                        context.Saga.PhoneNumber = context.Message.PhoneNumber;
                         context.Saga.PostalCode = context.Message.PostalCode;
                         context.Saga.Country = context.Message.Country;
                         context.Saga.Firstname = context.Message.Firstname;

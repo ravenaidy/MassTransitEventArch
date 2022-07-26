@@ -477,6 +477,7 @@ BEGIN
     ([AcountId]
     ,[Firstname]
     ,[Lastname]
+	,[Email]
     ,[Gender]
     ,[AddressLine1]
     ,[AddressLine2]
@@ -488,6 +489,7 @@ BEGIN
         (@AccountId
         ,@Firstname
         ,@LastName
+		,@Email
         ,@Gender
         ,@AddressLine1
         ,@AddressLine2

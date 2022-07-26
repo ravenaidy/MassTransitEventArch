@@ -421,6 +421,7 @@ CREATE TABLE [dbo].[Account](
                                 [Firstname] [nvarchar](50) NOT NULL,
                                 [Lastname] [nvarchar](50) NOT NULL,
                                 [Email] [nvarchar](50) NOT NULL,
+								[PhoneNumber] [int](50) NOT NULL,
                                 [Gender] [int] NOT NULL,
                                 [AddressLine1] [nvarchar](50) NOT NULL,
                                 [AddressLine2] [nvarchar](50) NOT NULL,
@@ -463,6 +464,7 @@ CREATE PROCEDURE [dbo].[pr_RegisterAccount]
     @Firstname NVARCHAR(50),
     @LastName NVARCHAR(50),
     @Email NVARCHAR(50),
+	@PhoneNumber INT,
     @Gender INT,
     @AddressLine1 NVARCHAR(50),
     @AddressLine2 NVARCHAR(50),
@@ -478,6 +480,7 @@ BEGIN
     ,[Firstname]
     ,[Lastname]
 	,[Email]
+	,[PhoneNumber]
     ,[Gender]
     ,[AddressLine1]
     ,[AddressLine2]
@@ -490,6 +493,7 @@ BEGIN
         ,@Firstname
         ,@LastName
 		,@Email
+		,@PhoneNumber
         ,@Gender
         ,@AddressLine1
         ,@AddressLine2

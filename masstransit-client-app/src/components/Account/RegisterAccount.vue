@@ -39,7 +39,7 @@
           <span><i>
               <font-awesome-icon icon="phone" />
             </i></span>
-          <input type="text" v-model="phone" placeholder="Phone" required />
+          <input type="text" v-model.number="phoneNumber" placeholder="Phone number" required />
         </div>
         <div class="halfcol">
           <select v-model.number="gender">
@@ -76,7 +76,7 @@
           <span><i>
               <font-awesome-icon icon="address-book" />
             </i></span>
-          <input type="text" v-model="postalcode" placeholder="Postal Code" required />
+          <input type="text" v-model.number="postalcode" placeholder="Postal Code" required />
         </div>
         <div class="halfcol">
           <select v-model.number="country" placeholder="Country" required>
@@ -106,6 +106,7 @@ export default {
       firstname: "",
       lastname: "",
       gender: "",
+      phoneNumber: "",
       addressline1: "",
       addressline2: "",
       addressline3: "",
@@ -116,21 +117,22 @@ export default {
   },
   methods: {
     async register() {
-      const { email, username, password, firstname, lastname, gender, addressline1, addressline2, addressline3, city, postalcode, country } = this;
-      masstransitHub.client.invoke("SendNewAccountRequest", JSON.stringify({
-        email,
-        username,
-        password,
-        firstname,
-        lastname,
-        gender,
-        addressline1,
-        addressline2,
-        addressline3,
-        city,
-        postalcode,
-        country
-      }));
+      const request = {
+        email: this.email,
+        username: this.username,
+        password: this.password,
+        firstname: this.firstname,
+        lastname: this.lastname,
+        phoneNumber: this.phone,
+        gender: this.gender,
+        addressline1: this.addressline1,
+        addressline2: this.addressline2,
+        addressline3: this.addressline3,
+        city: this.city,
+        postalcode: this.postalcode,
+        country: this.country
+      };      
+      masstransitHub.client.invoke("SendNewAccountRequest", request);
     }
   },
   mounted() {

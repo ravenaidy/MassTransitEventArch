@@ -14,6 +14,8 @@ namespace MassTransit.AccountOrchestrator.StateMachine
 
         public string Lastname { get; set; }
 
+        public int PhoneNumber { get; set; }
+
         public Gender Gender { get; set; }
 
         public string AddressLine1 { get; set; }

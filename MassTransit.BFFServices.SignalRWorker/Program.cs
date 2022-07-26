@@ -67,6 +67,7 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddSingleton(sp => new HubConnectionBuilder()
             .WithUrl(config["MassTransitHub:Url"])  
             .WithAutomaticReconnect()
+            .AddJsonProtocol(opt => opt.PayloadSerializerOptions.PropertyNameCaseInsensitive = true)
             .Build());
     })
     .Build();

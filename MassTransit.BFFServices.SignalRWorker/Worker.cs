@@ -1,5 +1,4 @@
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using MassTransit.BFFServices.SignalRWorker.Account.Commands;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using GetAccountRequest = MassTransit.BFFServices.SignalRWorker.Account.Queries.GetAccountRequest;
 
 namespace MassTransit.BFFServices.SignalRWorker
 {
@@ -29,22 +27,14 @@ namespace MassTransit.BFFServices.SignalRWorker
         {
             await _hubConnection.StartAsync(stoppingToken);
 
-            _hubConnection.On<GetAccountRequest>("PublishGetAccountRequest", (request) =>
+            //_hubConnection.On<GetAccountRequest>("PublishGetAccountRequest", (request) =>
+            //{
+            //    //_mediator.Send(request, stoppingToken);
+            //});
+
+            _hubConnection.On<NewAccountRequest>("PublishNewAccountRequest", async request =>
             {
-                //_mediator.Send(request, stoppingToken);
-            });
-
-            _hubConnection.On<string>("PublishNewAccountRequest", async request =>
-            {
-                var newRegistration = JsonSerializer.Deserialize<NewAccountRequest>(request,
-                    new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
-
-                if (newRegistration is null) return;
-
-                await ProcessSignalRMessage(newRegistration, stoppingToken);
+                await ProcessSignalRMessage(request, stoppingToken);
             });
 
             while (!stoppingToken.IsCancellationRequested)
