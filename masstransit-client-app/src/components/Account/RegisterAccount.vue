@@ -9,7 +9,7 @@
               <font-awesome-icon icon="envelope" />
             </i>
           </span>
-          <input type="email" v-model="username" placeholder="Email" required />
+          <input type="email" v-model="email" placeholder="Email" required />
         </div>
         <div class="halfcol">
           <span><i>
@@ -153,15 +153,15 @@ export default {
   overflow: visible;
 
   .form {
-    width: 600px;
-    height: 100%;
-    position: relative;
+    width: 600px;    
+    position: absolute;
     background-color: #f4f4f4;
     color: #333;
     margin: 0 auto;
     border: 1px solid;
     padding: 10px;
-    top: 100px;
+    top: 15%;    
+    left: 34.5%;
     display: grid;
     border-radius: 10px;
     grid-template-columns: 1fr 1fr;
@@ -222,8 +222,7 @@ input {
   &[type="text"],
   &[type="email"],
   &[type="password"] {
-    padding: 8px 10px 9px 35px;
-    outline: none;
+    padding: 8px 10px 9px 40px;    
   }
 
   &[type="submit"] {
@@ -233,7 +232,7 @@ input {
     background: darken($color: #a1c3ff, $amount: 20%);
     border: none;
     color: #fff;    
-    font-size: medium;    
+    font-size: medium;
 
     &:hover {
       background: lighten($color: $background-color, $amount: 5%);
