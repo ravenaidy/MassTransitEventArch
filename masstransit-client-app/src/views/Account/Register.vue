@@ -1,11 +1,7 @@
 <template>
     <MassTransitNav />
-   
-            <RegisterAccount @registered-account="displayRegisteredAccount" />
-        
-        <div v-if="showRegister === false" class="form">
-            <AccountRegistered isRegistered="isRegistered" />
-        </div>   
+    <RegisterAccount @registered-account="displayRegisteredAccount" :show-registration="showRegister" />    
+    <AccountRegistered :show-registered="showRegistered" isRegistered="isRegistered" />    
 </template>
 
 <script>
@@ -25,11 +21,13 @@ export default {
         return {
             showRegister: true,
             isRegistered: false,
+            showRegistered: false
         }
     },
     methods: {
         displayRegisteredAccount(isRegistered) {
             this.showRegister = false;
+            this.showRegistered = true;
             this.isRegistered = isRegistered;
         }
     }

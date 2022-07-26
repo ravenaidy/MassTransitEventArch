@@ -1,6 +1,6 @@
 ﻿<template>
 
-  <div class="showcase-content">
+  <div class="showcase-content" v-if="showRegistered">
     <p>{{ displayMessage }}</p>
     <img :src="require(`../../assets/img/${displayImageSrc}`)" />
     
@@ -13,6 +13,7 @@
 export default {
   name: "AccountRegistered",
   props: {
+    showRegistered: Boolean,
     isRegistered: Boolean
   },
   data() {

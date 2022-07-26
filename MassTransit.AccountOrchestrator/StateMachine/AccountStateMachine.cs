@@ -27,6 +27,7 @@ namespace MassTransit.AccountOrchestrator.StateMachine
                         context.Saga.Lastname = context.Message.Lastname;
                         context.Saga.Gender = context.Message.Gender;
                         context.Saga.Email = context.Message.Email;
+                        context.Saga.City = context.Message.City;
                     })
                     .Produce(context => context.Init<CreateLogin>(
                         new
@@ -44,6 +45,7 @@ namespace MassTransit.AccountOrchestrator.StateMachine
                         FirstName = context.Saga.Firstname,
                         LastName = context.Saga.Lastname,
                         Gender = (int)context.Saga.Gender,
+                        PhoneNumber = context.Saga.PhoneNumber,
                         AddressLine1 = context.Saga.AddressLine1,
                         AddressLine2 = context.Saga.AddressLine2,
                         AddressLine3 = context.Saga.AddressLine3,
@@ -63,7 +65,6 @@ namespace MassTransit.AccountOrchestrator.StateMachine
                     }))
                     .Finalize()
             );
-
             SetCompletedWhenFinalized();
         }
         

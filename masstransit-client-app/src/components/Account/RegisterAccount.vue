@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="registercontainer">
+  <div class="registercontainer" v-if="showRegistration">
     <form @submit.prevent="register">
       <div class="form">
         <h2>Registration</h2>
@@ -42,12 +42,13 @@
           <input type="text" v-model.number="phoneNumber" placeholder="Phone number" required />
         </div>
         <div class="halfcol">
-          <select v-model.number="gender">
+          <select v-model.number="gender" required>
             <option value="">Select gender</option>
             <option value="1">Male</option>
             <option value="2">Female</option>
           </select>
-        </div>        
+          <div class="select_arrow"></div>
+        </div>
         <div class="halfcol">
           <span><i>
               <font-awesome-icon icon="address-book" />
@@ -79,11 +80,12 @@
           <input type="text" v-model.number="postalcode" placeholder="Postal Code" required />
         </div>
         <div class="halfcol">
-          <select v-model.number="country" placeholder="Country" required>
+          <select v-model="country" placeholder="Country" required>
             <option value="">Select country</option>
-            <option value="">South Africa</option>
-            <option value="">USA</option>
+            <option value="1">South Africa</option>
+            <option value="2">USA</option>
           </select>
+          <div class="select_arrow"></div>
         </div>
         <div class="fullcol">
           <input class="button" type="submit" value="Register" />
@@ -98,6 +100,9 @@ import masstransitHub from "@/hubs/masstransitHub";
 
 export default {
   name: "RegisterAccount",
+  props: {
+    showRegistration: Boolean
+  },
   data() {
     return {
       email: "",
@@ -123,7 +128,7 @@ export default {
         password: this.password,
         firstname: this.firstname,
         lastname: this.lastname,
-        phoneNumber: this.phone,
+        phoneNumber: this.phoneNumber,
         gender: this.gender,
         addressline1: this.addressline1,
         addressline2: this.addressline2,
@@ -131,7 +136,7 @@ export default {
         city: this.city,
         postalcode: this.postalcode,
         country: this.country
-      };      
+      };
       masstransitHub.client.invoke("SendNewAccountRequest", request);
     }
   },
@@ -155,14 +160,14 @@ export default {
   overflow: visible;
 
   .form {
-    width: 600px;    
+    width: 600px;
     position: absolute;
-    background-color: #f4f4f4;
+    background-color: #fff;
     color: #333;
     margin: 0 auto;
     border: 1px solid;
     padding: 10px;
-    top: 15%;    
+    top: 15%;
     left: 34.5%;
     display: grid;
     border-radius: 10px;
@@ -192,7 +197,7 @@ export default {
         >i {
           position: absolute;
           margin: 2.5px -6px;
-        }       
+        }
       }
     }
 
@@ -218,13 +223,27 @@ export default {
 }
 
 input {
-  width: 100%;
-  height: 30px;
-
   &[type="text"],
   &[type="email"],
   &[type="password"] {
-    padding: 8px 10px 9px 40px;    
+    width: 100%;
+    height: 30px;
+    padding: 8px 10px 9px 40px;
+    outline: none;
+  }
+
+  &[type="text"]:hover,
+  &[type="email"]:hover,
+  &[type="password"]:hover {
+    background: #fafafa;
+    border: 1px solid #42b983;
+  }
+
+  &[type="text"]:focus,
+  &[type="email"]:focus,
+  &[type="password"]:focus {  
+    border: 1px solid #42b983;
+    background: #fafafa;    
   }
 
   &[type="submit"] {
@@ -233,12 +252,13 @@ input {
     margin: 10px 15px;
     background: darken($color: #a1c3ff, $amount: 20%);
     border: none;
-    color: #fff;    
+    color: #fff;
     font-size: medium;
 
     &:hover {
       background: lighten($color: $background-color, $amount: 5%);
     }
+
     &:focus {
       background: lighten($color: $background-color, $amount: 5%);
     }
@@ -250,5 +270,63 @@ select {
   height: 30px;
   padding: 0px 15px;
   background: #fff;
+  cursor: pointer;
+  border: 1px solid grey;
+  border-radius: 0;
+  appearance: none;
+
+  &::-ms-expand {
+    display: none;
+  }
+
+  &:hover,
+  &:focus {
+    color: black;
+    background: #fafafa;
+    border-color: black;
+    outline: none;
+  }
 }
+
+.select_arrow {
+  position: absolute;
+  top: calc(50% - 3px);
+  right: 30px;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  border-width: 8px 5px 0 5px;
+  border-style: solid;
+  border-color: #7b7b7b transparent transparent transparent;
+
+  &:hover,
+  &:focus {
+    border-top-color: black;
+  }
+}
+
+@media (max-width: 600px) {
+  .registercontainer {
+    .fullcol {
+      width: 100%;      
+    }
+  }
+  .bottom_row {
+    .col_half {
+      width: 50%;
+      float: left;
+    }
+  }
+  .form_container {
+    .row {
+      .col_half.last {
+        border-left: none;
+      }
+    }
+  }
+  .remember_me {
+    padding-bottom: 20px;
+  }
+}
+
 </style>

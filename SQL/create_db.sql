@@ -421,7 +421,7 @@ CREATE TABLE [dbo].[Account](
                                 [Firstname] [nvarchar](50) NOT NULL,
                                 [Lastname] [nvarchar](50) NOT NULL,
                                 [Email] [nvarchar](50) NOT NULL,
-								[PhoneNumber] [int](50) NOT NULL,
+								[PhoneNumber] [int] NOT NULL,
                                 [Gender] [int] NOT NULL,
                                 [AddressLine1] [nvarchar](50) NOT NULL,
                                 [AddressLine2] [nvarchar](50) NOT NULL,
