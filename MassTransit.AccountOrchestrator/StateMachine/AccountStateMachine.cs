@@ -39,6 +39,10 @@ namespace MassTransit.AccountOrchestrator.StateMachine
 
             During(CreateLogin,
                 When(LoginCreatedEvent)
+                    .Then(context =>
+                    {
+                        context.Saga.AccountId = context.Message.UserId;
+                    })
                     .Produce(context => context.Init<CreateAccount>(new
                     {
                         AccountId = context.Message.UserId,

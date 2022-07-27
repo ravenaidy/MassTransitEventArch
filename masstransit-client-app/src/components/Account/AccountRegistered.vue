@@ -1,9 +1,12 @@
 ﻿<template>
 
-  <div class="showcase-content" v-if="showRegistered">
-    <p>{{ displayMessage }}</p>
-    <img :src="require(`../../assets/img/${displayImageSrc}`)" />
-    
+  <div class="registercontainer" v-if="showRegistered">
+    <div class="showcase">      
+      <i v-if="isRegistered === true"><font-awesome-icon icon="circle-check" size="6x" color="#fff" /></i>
+      <i v-else><font-awesome-icon icon="exclamation-circle" size="6x" color="red" /></i>
+      <p v-if="isRegistered === true">Account registration was successful. You are lucky to have been granted an account. Let us not regret our decision.</p>
+      <p v-else>Unfortunately your account registration was unsuccessful. From your input we have determined you are not a fit. Sorry not sorry.</p>
+    </div>
   </div>
 
 </template>
@@ -15,42 +18,38 @@ export default {
   props: {
     showRegistered: Boolean,
     isRegistered: Boolean
-  },
-  data() {
-    return {
-      displayMessage: "",
-      displayImageSrc: ""
-    }
-  },
-  beforeMount() {
-    if (this.isRegistered) {
-      this.displayMessage = "Account registration was successful. You are lucky to have been granted an account. Let us not regret our decision";
-      this.displayImageSrc = "oops.jpg";
-      return;
-    }
-    this.displayMessage = "Unfortunately your account registration was unsuccessful. From your input we have determined you are not a fit. Sorry not sorry";
-    this.displayImageSrc = "oops.jpg";
-  }
+  } 
 }
 
 </script>
 
 <style scoped lang="scss">
-.showcase-content {
-  display: flex;
-  align-items: center;
-  margin: 10% 20%;
-  line-height: 1.2;
+@import "../../assets/scss/config";
 
-  p {
-    justify-content:space-between;
-    text-align: left;
-    font-size: large;
-    overflow: auto;
-  }
+.registercontainer {  
+  min-height: 400px;  
+  background-color: $background-color;
 
-  img {
-    width: 40%;    
+  .showcase {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    line-height: 1.2;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px auto;    
+
+    p {
+      font-size: large;
+      padding: 40px 30px;
+      color: #fff;
+    }
+
+    i {      
+      padding-top: 50px;
+      padding-right: 35px ;
+    }
   }
 }
 </style>

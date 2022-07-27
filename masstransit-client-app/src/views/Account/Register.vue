@@ -1,7 +1,7 @@
 <template>
     <MassTransitNav />
-    <RegisterAccount @registered-account="displayRegisteredAccount" :show-registration="showRegister" />    
-    <AccountRegistered :show-registered="showRegistered" isRegistered="isRegistered" />    
+    <RegisterAccount @registered-account="displayRegisteredAccount" :show-registration="showRegister" />
+    <AccountRegistered :show-registered="showRegistered" :isRegistered="isRegistered" />
 </template>
 
 <script>
@@ -32,4 +32,5 @@ export default {
         }
     }
 }
+
 </script>

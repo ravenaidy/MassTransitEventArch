@@ -1,10 +1,9 @@
-﻿import { HubConnectionBuilder, LogLevel } from "@aspnet/signalr"
+﻿import { HubConnectionBuilder } from "@aspnet/signalr"
 
 class MasstransitHub {
     constructor() {
         this.client = new HubConnectionBuilder()
-            .withUrl("http://localhost:5002/masstransitHub")
-            .configureLogging(LogLevel.Information)
+            .withUrl("http://localhost:5002/masstransitHub")            
             .build();        
     }
     
