@@ -17,13 +17,7 @@ namespace MassTransit.BFFServices.SignalRWorker.Account.Consumers
 
         public async Task Consume(ConsumeContext<AccountRegistered> context)
         {
-            await _hubContext.InvokeAsync("SendAccountCreated", JsonSerializer.Serialize(context.Message,
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true,
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                }
-            ));
+            await _hubContext.InvokeAsync("SendAccountCreated",context.Message);
         }
     }
 }

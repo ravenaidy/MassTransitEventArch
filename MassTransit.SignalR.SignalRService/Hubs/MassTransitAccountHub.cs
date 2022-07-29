@@ -21,7 +21,7 @@ namespace MassTransit.SignalR.SignalRService.Hubs
             await Clients.All.SendAsync("PublishNewAccountRequest", request);
         }
 
-        public async Task SendAccountCreated(string request)
+        public async Task SendAccountCreated(AccountRegistered request)
         {
             await Clients.All.SendAsync("PublishAccountCreated", request);
         }

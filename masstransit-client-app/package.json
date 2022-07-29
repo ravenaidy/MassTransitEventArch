@@ -8,12 +8,13 @@
     "watch": "vue-cli-service build --watch",
     "lint": "vue-cli-service lint"
   },
-  "dependencies": {    
+  "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/vue-fontawesome": "^3.0.0-3",
+    "@microsoft/signalr": "^6.0.7",
     "core-js": "^3.8.3",
     "jest": "^28.1.1",
     "jest-editor-support": "^30.1.0",
@@ -22,7 +23,6 @@
     "vue-router": "^4.1.1"
   },
   "devDependencies": {
-    "@aspnet/signalr": "^1.0.27",
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
     "@vue/cli-plugin-babel": "~5.0.0",
