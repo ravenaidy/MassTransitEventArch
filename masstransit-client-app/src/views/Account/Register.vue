@@ -1,24 +1,30 @@
 <template>
     <MassTransitNav />
-    <div class="container" ref="container">                
-        <RegisterAccount @registered-account="displayRegisteredAccount" :show-registration="showRegister" />
-        <LogIn />
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <h1>Welcome back!</h1>
-                    <p>Please login with you username and password</p>
-                    <button class="ghost" @click="openSignIn">Sign In</button>
-                </div>
-                <div class="overlay-panel overlay-right">
-                    <h1>Hello!</h1>
-                    <p>Please enter personal details to register account</p>
-                    <button class="ghost" @click="openSignup">Sign Up</button>
+    <header class="header">
+        <div class="container" ref="container" v-if="showForm" >
+            <div class="register-container sign-up-container">
+                <RegisterAccount @registered-account="displayRegisteredAccount" />
+            </div>
+            <div class="register-container sign-in-container">
+                <LogIn />
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Welcome back!</h1>
+                        <p>Please login with you username and password</p>
+                        <button class="ghost" @click="openSignIn">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Hello!</h1>
+                        <p>Please enter personal details to register account</p>
+                        <button class="ghost" @click="openSignup">Sign Up</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <AccountRegistered :show-registered="showRegistered" :isRegistered="isRegistered" />
+        <AccountRegistered :show-registered="showRegistered" :isRegistered="isRegistered" />
+    </header>
 </template>
 
 <script>
@@ -39,15 +45,14 @@ export default {
     },
     data() {
         return {
-            showLogin: true,
-            showRegister: false,
-            showRegistered: false,
+            showForm: false,
+            showRegistered: true,
             isRegistered: false
         }
     },
     methods: {
         displayRegisteredAccount(account) {
-            this.showRegister = false;
+            this.showForm = false;
             this.showRegistered = true;
             this.isRegistered = account.isRegistered;
         },
@@ -60,7 +65,7 @@ export default {
     },
     mounted() {
         masstransitHub.start();
-
+        
         masstransitHub.client.onclose(async () => {
             await masstransitHub.client.start();
         });
@@ -69,30 +74,7 @@ export default {
 
 </script>
 
-<style lang="scss" scoped>
-
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
-
-h1 {
-	font-weight: bold;
-	margin: 0;
-}
-
-h2 {
-	text-align: center;
-}
-
-p {
-	font-size: 14px;
-	font-weight: 100;
-	line-height: 20px;
-	letter-spacing: 0.5px;
-	margin: 20px 0 30px;
-}
-
-span {
-	font-size: 12px;
-}
+<style lang="scss" scoped >
 
 button {
     border-radius: 20px;
@@ -103,7 +85,7 @@ button {
     font-weight: bold;
     padding: 12px 45px;
     letter-spacing: 1px;
-    text-transform: uppercase;
+    text-transform: uppercase;    
     transition: transform 80ms ease-in;
 }
 
@@ -120,35 +102,18 @@ button.ghost {
     border-color: #FFFFFF;
 }
 
-form {
-    background-color: #FFFFFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0 50px;
-    height: 100%;
-    text-align: center;    
-}
-
-input {
-    background-color: #eee;
-    border: none;
-    padding: 12px 15px;
-    margin: 8px 0;
-    width: 100%;
-}
-
-.container {    
+.container {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
         0 10px 10px rgba(0, 0, 0, 0.22);
-    position: relative;
+    position: absolute;
     overflow: hidden;
-    width: 768px;
+    width: 910px;
     max-width: 100%;
-    min-height: 480px;
+    height: 550px;
+    top: 15%;
+    right: 26%;
 }
 
 .register-container {
@@ -179,7 +144,8 @@ input {
     transform: translateX(100%);
     opacity: 1;
     z-index: 5;
-    animation: show 0.6s;
+    width: 50%;
+    animation: show 0.6s;    
 }
 
 @keyframes show {
@@ -213,7 +179,7 @@ input {
 }
 
 .overlay {
-    background: #FF416C;
+    background: #0151cc;
     background: -webkit-linear-gradient(to right, #0151cc, #0151cc);
     background: linear-gradient(to right, #0151cc, #0151cc);
     background-repeat: no-repeat;
@@ -253,16 +219,15 @@ input {
 }
 
 .container.right-panel-active .overlay-left {
-	transform: translateX(0);
+    transform: translateX(0);    
 }
 
 .overlay-right {
     right: 0;
-    transform: translateX(0);    
+    transform: translateX(0);        
 }
 
 .container.right-panel-active .overlay-right {
-	transform: translateX(20%);
+    transform: translateX(20%);    
 }
-
 </style>
