@@ -7,14 +7,14 @@ namespace MassTransit.SignalR.SignalRService.Hubs
 {
     public class MassTransitAccountHub : Hub
     {
-        public async Task SendLoginRequest(GetAccountRequest request)
+        public async Task SendLoginRequest(GetLoginRequest handler)
         {
-            await Clients.All.SendAsync("PublishGetAccountRequest", request);
+            await Clients.All.SendAsync("PublishGetLoginRequest", handler);
         }
 
-        public async Task SendLogin(Account account)
+        public async Task SendLogin(LoginResponse login)
         {
-            await Clients.All.SendAsync("PublishLogin", account);
+            await Clients.All.SendAsync("PublishLogin", login);
         }
         public async Task SendNewAccountRequest(NewAccountRequest request)
         {

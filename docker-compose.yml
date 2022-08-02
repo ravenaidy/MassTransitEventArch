@@ -143,6 +143,7 @@ services:
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-getlogin --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-account-getaccount --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-account-registered --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-loginresponse --replication-factor 1 --partitions 1
       
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka:kafkabroker --list

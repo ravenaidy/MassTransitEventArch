@@ -26,7 +26,7 @@
 				</p>
 			</div>
 			<div class="box">
-				<h2>Libraries/Languages</h2>
+				<h2>Libraries / Languages</h2>
 				<p>
 					C#, Python, Vuejs, Mediator, AutoMapper, Dapper, FastApi, Masstransit, Sass
 				</p>

@@ -18,7 +18,7 @@ namespace MassTransit.Shared.Infrastructure.Dapper
             _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
         }
 
-        protected IDbConnection Connection
+        private IDbConnection Connection
         {
             get
             {
@@ -39,13 +39,13 @@ namespace MassTransit.Shared.Infrastructure.Dapper
             return await Connection.ExecuteScalarAsync<T>(cmd);
         }
 
-        protected async Task<IEnumerable<T>> QueryAsync<T>(string sql, object parameters = null, CommandType commandType = CommandType.StoredProcedure)
+        protected async Task<IEnumerable<T>> QueryAsync<T>(string sql, object parameters = null!, CommandType commandType = CommandType.StoredProcedure)
         {
             var cmd = new CommandDefinition(sql, parameters, commandType: commandType);
             return await Connection.QueryAsync<T>(cmd);
         }
 
-        protected async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object parameters = null, CommandType commandType = CommandType.StoredProcedure)
+        protected async Task<T> QueryFirstOrDefaultAsync<T>(string sql, object parameters = null!, CommandType commandType = CommandType.StoredProcedure)
         {
             var cmd = new CommandDefinition(sql, parameters, commandType: commandType);
             return await Connection.QueryFirstOrDefaultAsync<T>(cmd);

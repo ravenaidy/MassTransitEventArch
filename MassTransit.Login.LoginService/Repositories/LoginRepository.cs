@@ -18,5 +18,12 @@ namespace MassTransit.LoginService.Repositories
             const string spName = "pr_RegisterLogin";
             return await QueryFirstOrDefaultAsync<int>(spName, parameters);
         }
+
+        public async Task<Login> GetLogin(string username, string password)
+        {
+            var parameters = new {UserName = username, Password = password};
+            const string spName = "pr_GetLoginByUsernameAndPassword";
+            return await QueryFirstOrDefaultAsync<Login>(spName, parameters);
+        }
     }
 }

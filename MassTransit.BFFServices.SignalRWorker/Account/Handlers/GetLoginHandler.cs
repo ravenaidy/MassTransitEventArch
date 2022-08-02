@@ -6,18 +6,18 @@ using MediatR;
 
 namespace MassTransit.BFFServices.SignalRWorker.Account.Handlers
 {
-    public class GetAccountHandler : IRequestHandler<GetAccountRequest>
+    public class GetLoginHandler : IRequestHandler<GetLoginRequest>
     {
-        private readonly ITopicProducer<GetAccountRequest> _producer;
+        private readonly ITopicProducer<GetLoginRequest> _producer;
 
-        public GetAccountHandler(ITopicProducer<GetAccountRequest> producer)
+        public GetLoginHandler(ITopicProducer<GetLoginRequest> producer)
         {
             _producer = producer ?? throw new ArgumentNullException(nameof(producer));
         }
         
-        public async Task<Unit> Handle(GetAccountRequest request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(GetLoginRequest handler, CancellationToken cancellationToken)
         {
-            await _producer.Produce(request, cancellationToken);
+            await _producer.Produce(handler, cancellationToken);
             return Unit.Value;
         }
     }

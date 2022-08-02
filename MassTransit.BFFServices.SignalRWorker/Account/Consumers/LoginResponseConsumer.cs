@@ -4,18 +4,18 @@ using Microsoft.AspNetCore.SignalR.Client;
 
 namespace MassTransit.BFFServices.SignalRWorker.Account.Consumers
 {
-    public class GetAccountConsumer : IConsumer<Models.Account>
+    public class LoginResponseConsumer : IConsumer<Models.Login>
     {
         private readonly HubConnection _hubContext;
 
-        public GetAccountConsumer(HubConnection hubContext)
+        public LoginResponseConsumer(HubConnection hubContext)
         {
             _hubContext = hubContext ?? throw new ArgumentNullException(nameof(hubContext));
         }
         
-        public async Task Consume(ConsumeContext<Models.Account> context)
+        public async Task Consume(ConsumeContext<Models.Login> context)
         {
-            await _hubContext.InvokeAsync("PublishAccount", context.Message);
+            await _hubContext.InvokeAsync("SendLogin", context.Message);
         }
     }
 }

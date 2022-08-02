@@ -1,12 +1,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MassTransit.BFFServices.SignalRWorker.Account.Commands;
+using MassTransit.BFFServices.SignalRWorker.Account.Queries;
 using MediatR;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NewAccountRequest = MassTransit.BFFServices.SignalRWorker.Account.Commands.NewAccountRequest;
 
 namespace MassTransit.BFFServices.SignalRWorker
 {
@@ -27,10 +28,10 @@ namespace MassTransit.BFFServices.SignalRWorker
         {
             await _hubConnection.StartAsync(stoppingToken);
 
-            //_hubConnection.On<GetAccountRequest>("PublishGetAccountRequest", (request) =>
-            //{
-            //    //_mediator.Send(request, stoppingToken);
-            //});
+            _hubConnection.On<GetLoginRequest>("PublishGetLoginRequest", async (request) =>
+            {
+                await ProcessSignalRMessage(request, stoppingToken);
+            });
 
             _hubConnection.On<NewAccountRequest>("PublishNewAccountRequest", async request =>
             {

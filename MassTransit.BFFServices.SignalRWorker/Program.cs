@@ -19,7 +19,7 @@ var host = Host.CreateDefaultBuilder(args)
         
         // Add mappings
         services.AddObjectMapping(
-            typeof(Account).Assembly);
+            typeof(Login).Assembly);
         
         services.AddHostedService<Worker>();
 
@@ -39,20 +39,20 @@ var host = Host.CreateDefaultBuilder(args)
             bus.AddRider(rider =>
             {
                 // Producers
-                rider.AddProducer<GetAccountRequest>(config["Kafka:Config:GetLoginTopic"]);
+                rider.AddProducer<GetLoginRequest>(config["Kafka:Config:GetLoginTopic"]);
                 rider.AddProducer<NewAccountRequest>(config["Kafka:Config:RegisterAccountTopic"]);
 
                 // Consumers
-                rider.AddConsumer<GetAccountConsumer>();
+                rider.AddConsumer<LoginResponseConsumer>();
                 rider.AddConsumer<AccountRegisteredConsumer>();
                 rider.UsingKafka((context, kafka) =>
                 {
                     kafka.Host(config["Kafka:Config:Host"]);
 
-                    kafka.TopicEndpoint<Account>(config["Kafka:Config:GetAccountTopic"], config["Kafka:Config:SignalRGroup"], c =>
+                    kafka.TopicEndpoint<Login>(config["Kafka:Config:LoginResponseTopic"], config["Kafka:Config:SignalRGroup"], c =>
                     {
                         c.AutoOffsetReset = AutoOffsetReset.Earliest;
-                        c.ConfigureConsumer<GetAccountConsumer>(context);
+                        c.ConfigureConsumer<LoginResponseConsumer>(context);
                     });
                     kafka.TopicEndpoint<AccountRegistered>(config["Kafka:Config:AccountRegisteredTopic"], config["Kafka:Config:SignalRGroup"], c =>
                     {

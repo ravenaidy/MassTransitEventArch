@@ -22,8 +22,8 @@ namespace MassTransit.LoginService.Consumers
 
         public async Task Consume(ConsumeContext<CreateLogin> context)
         {
-            var userId = await _loginRepository.RegisterLogin(_mapper.Map<Login>(context.Message));
-            await _producer.Produce(new LoginCreated { UserId = userId, LoginCreatedTimeStamp = InVar.Timestamp });
+            var loginId = await _loginRepository.RegisterLogin(_mapper.Map<Login>(context.Message));
+            await _producer.Produce(new LoginCreated { LoginId = loginId, LoginCreatedTimeStamp = InVar.Timestamp });
         }
     }
 }

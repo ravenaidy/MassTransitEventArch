@@ -1,6 +1,6 @@
-﻿namespace MassTransit.SignalR.SignalRService.DTO
+﻿namespace MassTransit.LoginService.Events
 {
-    public class GetAccountRequest
+    public class GetLogin 
     {
         public string Username { get; set; }
         public string Password { get; set; }

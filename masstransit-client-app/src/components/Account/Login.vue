@@ -15,7 +15,7 @@
                     <font-awesome-icon icon="lock" />
                 </i>
             </span>
-            <input type="text" v-model="username" placeholder="Password" required />
+            <input type="password" v-model="password" placeholder="Password" required />
         </div>
         <button>Sign In</button>
     </form>
@@ -43,7 +43,7 @@ export default {
     },
     mounted() {
         masstransitHub.client.on("PublishLogin", async (login) => {
-            this.$emit("loggedin", login);
+            this.$emit("logged-in", login);
         });
     }
 }

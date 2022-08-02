@@ -1,24 +1,24 @@
 <template>
     <MassTransitNav />
     <header class="header">
-        <div class="container" ref="container" v-if="showForm" >
+        <div class="container" ref="container" v-if="showForm">
             <div class="register-container sign-up-container">
                 <RegisterAccount @registered-account="displayRegisteredAccount" />
             </div>
             <div class="register-container sign-in-container">
-                <LogIn />
+                <LogIn @logged-in="login" />
             </div>
             <div class="overlay-container">
                 <div class="overlay">
                     <div class="overlay-panel overlay-left">
                         <h1>Welcome back!</h1>
                         <p>Please login with you username and password</p>
-                        <button class="ghost" @click="openSignIn">Sign In</button>
+                        <button class="ghost" @click="toggleForm(true)">Sign In</button>
                     </div>
                     <div class="overlay-panel overlay-right">
                         <h1>Hello!</h1>
                         <p>Please enter personal details to register account</p>
-                        <button class="ghost" @click="openSignup">Sign Up</button>
+                        <button class="ghost" @click="toggleForm(false)">Sign Up</button>
                     </div>
                 </div>
             </div>
@@ -34,6 +34,7 @@ import RegisterAccount from '@/components/Account/RegisterAccount'
 import AccountRegistered from '@/components/Account/AccountRegistered'
 import masstransitHub from "@/hubs/masstransitHub";
 import LogIn from "../../components/Account/LogIn.vue";
+import { useToast } from "vue-toastification"
 
 export default {
     name: "Register",
@@ -43,10 +44,14 @@ export default {
         MassTransitNav,
         LogIn
     },
+    setup() {
+        const toast = useToast();
+        return { toast };
+    },
     data() {
         return {
-            showForm: false,
-            showRegistered: true,
+            showForm: true,
+            showRegistered: false,
             isRegistered: false
         }
     },
@@ -56,16 +61,21 @@ export default {
             this.showRegistered = true;
             this.isRegistered = account.isRegistered;
         },
-        openSignIn() {
-            this.$refs.container.classList.value = 'container';
+        toggleForm(isSignin) {
+            this.$refs.container.classList.value = isSignin ? 'container' : 'container right-panel-active';
+
         },
-        openSignup() {
-            this.$refs.container.classList.value = 'container right-panel-active';
+        login(login) {
+            if (login.loginId > 0) {
+                this.$router.push('/dashboard');
+                return;
+            }
+            this.toast.error('No login found for provided credentials');
         }
     },
     mounted() {
         masstransitHub.start();
-        
+
         masstransitHub.client.onclose(async () => {
             await masstransitHub.client.start();
         });
@@ -75,7 +85,6 @@ export default {
 </script>
 
 <style lang="scss" scoped >
-
 button {
     border-radius: 20px;
     border: 1px solid #0151cc;
@@ -85,7 +94,7 @@ button {
     font-weight: bold;
     padding: 12px 45px;
     letter-spacing: 1px;
-    text-transform: uppercase;    
+    text-transform: uppercase;
     transition: transform 80ms ease-in;
 }
 
@@ -145,7 +154,7 @@ button.ghost {
     opacity: 1;
     z-index: 5;
     width: 50%;
-    animation: show 0.6s;    
+    animation: show 0.6s;
 }
 
 @keyframes show {
@@ -219,15 +228,15 @@ button.ghost {
 }
 
 .container.right-panel-active .overlay-left {
-    transform: translateX(0);    
+    transform: translateX(0);
 }
 
 .overlay-right {
     right: 0;
-    transform: translateX(0);        
+    transform: translateX(0);
 }
 
 .container.right-panel-active .overlay-right {
-    transform: translateX(20%);    
+    transform: translateX(20%);
 }
 </style>

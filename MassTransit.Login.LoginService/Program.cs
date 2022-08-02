@@ -29,6 +29,8 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddSingleton<ILoginRepository, LoginRepository>();
 
         services.AddHostedService<LoginWorker>();
+        
+        // Configure MassTransit
         services.AddMassTransit(bus =>
         {
             bus.UsingRabbitMq((context, cfg) =>
@@ -46,9 +48,12 @@ var host = Host.CreateDefaultBuilder(args)
             {
                 // Producers
                 rider.AddProducer<LoginCreated>(config["Kafka:Config:LoginCreatedTopic"]);
+                rider.AddProducer<LoginResponse>(config["Kafka:Config:LoginResponseTopic"]);
 
                 // Consumers
                 rider.AddConsumer<CreateLoginConsumer>();
+                rider.AddConsumer<GetLoginConsumer>();
+                
                 rider.UsingKafka((context, kafka) =>
                 {
                     kafka.Host(config["Kafka:Config:Host"]);
@@ -57,6 +62,12 @@ var host = Host.CreateDefaultBuilder(args)
                     {
                         c.AutoOffsetReset = AutoOffsetReset.Earliest;
                         c.ConfigureConsumer<CreateLoginConsumer>(context);
+                    });
+                    
+                    kafka.TopicEndpoint<GetLogin>(config["Kafka:Config:GetLoginTopic"], config["Kafka:Config:LoginGroup"], c =>
+                    {
+                        c.AutoOffsetReset = AutoOffsetReset.Earliest;
+                        c.ConfigureConsumer<GetLoginConsumer>(context);
                     });
                 });
 

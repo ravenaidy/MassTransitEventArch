@@ -41,11 +41,11 @@ namespace MassTransit.AccountOrchestrator.StateMachine
                 When(LoginCreatedEvent)
                     .Then(context =>
                     {
-                        context.Saga.AccountId = context.Message.UserId;
+                        context.Saga.AccountId = context.Message.LoginId;
                     })
                     .Produce(context => context.Init<CreateAccount>(new
                     {
-                        AccountId = context.Message.UserId,
+                        AccountId = context.Message.LoginId,
                         FirstName = context.Saga.Firstname,
                         LastName = context.Saga.Lastname,
                         Gender = (int)context.Saga.Gender,

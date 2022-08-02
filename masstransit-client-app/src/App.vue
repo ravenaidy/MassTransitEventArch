@@ -25,6 +25,6 @@ export default {
 <style lang="scss">
 
 @import "./assets/scss/config";
-@import "./assets/scss/theme.scss"
+@import "./assets/scss/theme.scss";
 
 </style>
