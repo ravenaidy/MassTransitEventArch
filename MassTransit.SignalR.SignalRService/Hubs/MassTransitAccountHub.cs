@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using MassTransit.SignalR.SignalRService.DTO;
-using MassTransit.SignalR.SignalRService.Models;
 using Microsoft.AspNetCore.SignalR;
 
 namespace MassTransit.SignalR.SignalRService.Hubs

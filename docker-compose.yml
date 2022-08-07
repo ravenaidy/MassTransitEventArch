@@ -40,6 +40,20 @@ services:
       - kafka-ui
       - init-kafka
       - loginservice
+      
+  chatservice:
+    image: ${DOCKER_REGISTRY-}chatservice
+    build:
+      context: .
+      dockerfile: ./MassTransit.Chat.MessagesService/Dockerfile
+    depends_on:
+      - masstransitdb
+      - zookeeper
+      - kafkabroker
+      - kafka-ui
+      - init-kafka
+      - loginservice
+      - masstransitcouchbase
         
   signalrhub:
     image: ${DOCKER_REGISTRY-}signalrhub
@@ -174,6 +188,17 @@ services:
     depends_on:
       - zookeeper
       - kafkabroker 
-      
-  
-    
+
+  masstransitcouchbase:
+    image: ${DOCKER_REGISTRY-}masstransitcouchbasecouchbase
+    build:
+      context: ./Couchbase
+      dockerfile: Dockerfile
+    ports:
+      - 8091:8091
+      - 8092:8092
+      - 8093:8093
+      - 11210:11210
+    depends_on:
+      - zookeeper
+      - kafkabroker

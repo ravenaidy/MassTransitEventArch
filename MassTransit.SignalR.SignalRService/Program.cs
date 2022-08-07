@@ -26,5 +26,6 @@ var app = builder.Build();
 app.UseCors(corsPolicy);
 
 app.MapHub<MassTransitAccountHub>("/masstransitHub");
+app.MapHub<MassTransitAccountHub>("/masstransitChatHub");
 
 app.Run();
