@@ -6,6 +6,8 @@ import { faEnvelope, faUser, faLock, faAddressBook, faCity, faPhone, faCircleChe
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast, { POSITION } from 'vue-toastification'
 import "vue-toastification/dist/index.css";
+import store from './store'
+
 
 library.add(faEnvelope, faUser, faLock, faAddressBook, faCity, faPhone, faCircleCheck, faExclamationCircle)
 
@@ -19,6 +21,7 @@ const toastOptions = {
 
 createApp(App)
     .use(router)
+    .use(store)
     .use(Toast, toastOptions)
     .component("font-awesome-icon", FontAwesomeIcon)
     .mount("#app");
