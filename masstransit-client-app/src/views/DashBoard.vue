@@ -24,6 +24,11 @@
 			MessageBox,
 			MassTransitNav,
 		},
+		created() {
+			if (this.$store.getters.getAuth === undefined) {
+				this.$router.push("/login");
+			}
+		},
 		mounted() {
 			masstransitChatHub.start().then(() => {
 				masstransitChatHub.client.invoke("JoinGroup", "masstransit");

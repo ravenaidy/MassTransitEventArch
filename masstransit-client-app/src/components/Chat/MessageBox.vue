@@ -1,5 +1,12 @@
 <template>
-	<div v-for="message in getMessages" :key="message.messageId" class="message">
+	<div
+		v-for="message in getMessages"
+		:key="message.messageId"
+		class="message"
+		:class="[
+			message.username === $store.getters.getAuth.username ? 'me' : 'other',
+		]"
+	>
 		{{ message.message }}
 	</div>
 </template>
@@ -9,6 +16,7 @@
 		name: "MessageBox",
 		computed: {
 			getMessages() {
+				console.log(this.$store.getters.allMessages);
 				return this.$store.getters.allMessages;
 			},
 		},
@@ -21,16 +29,21 @@
 </script>
 
 <style lang="scss" scoped>
-	.message {
+	.message.me {
 		background: #aaa;
 		color: #fff;
 		border-radius: 10px;
 		padding: 1 rem;
 		width: fit-content;
-
-		> h5 {
-			margin: 0 0 0.5rem 0;
-		}
+		margin: 10px;
+	}
+	.message.other {
+		background: green;
+		color: #fff;
+		border-radius: 10px;
+		padding: 1 rem;
+		width: fit-content;
+		margin: 10px;
 	}
 	.message.dark {
 		background: #e9eaf6;

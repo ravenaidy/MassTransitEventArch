@@ -5,5 +5,7 @@ namespace MassTransit.SignalR.SignalRService.DTO
         public int MessageId { get; set; }
 
         public string Message { get; set; }
+        
+        public string Username { get; set; }
     }
 }

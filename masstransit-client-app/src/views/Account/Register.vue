@@ -6,7 +6,7 @@
 				<RegisterAccount @registered-account="displayRegisteredAccount" />
 			</div>
 			<div class="register-container sign-in-container">
-				<LogIn @logged-in="login" />
+				<LogIn />
 			</div>
 			<div class="overlay-container">
 				<div class="overlay">
@@ -70,6 +70,7 @@
 			},
 			login(login) {
 				if (login.loginId > 0) {
+					this.$store.dispatch("addLogin", login);
 					this.$router.push("/dashboard");
 					return;
 				}
@@ -78,6 +79,9 @@
 		},
 		mounted() {
 			masstransitHub.start();
+			masstransitHub.client.on("PublishLogin", async (login) => {
+				this.login(login);
+			});
 		},
 	};
 </script>

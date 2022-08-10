@@ -7,11 +7,10 @@ namespace MassTransit.SignalR.SignalRService.Hubs
 {
     public class MassTransitChatHub : Hub
     {
-        public async Task SendMessage(string group, string message)
+        public async Task SendMessage(string group, ChatMessage message)
         {
             var randomNumber = new Random().Next();
-            await Clients.Group(group).SendAsync("PublishChatMessage",
-                new ChatMessage {MessageId = randomNumber, Message = message});
+            await Clients.Group(group).SendAsync("PublishChatMessage", message);
         } 
         public Task JoinGroup(string group)
         {

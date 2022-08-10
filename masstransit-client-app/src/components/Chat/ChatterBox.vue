@@ -17,10 +17,16 @@
 		},
 		methods: {
 			async sendMessage() {
+				const postMessage = {
+					messageId: this.$store.getters.getAuth.loginId,
+					message: this.message,
+					username: this.$store.getters.getAuth.username,
+				};
+
 				masstransitChatHub.client.invoke(
 					"SendMessage",
 					"masstransit",
-					this.message
+					postMessage
 				);
 				this.resetFields();
 			},
