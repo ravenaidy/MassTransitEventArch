@@ -45,6 +45,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat", "Chat", "{B80C321C-2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit.Chat.MessagesService", "MassTransit.Chat.MessagesService\MassTransit.Chat.MessagesService.csproj", "{BB2916E9-76A3-4623-A61E-D20B18EB442F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masstransit.Api.Auth", "Masstransit.Api.Auth\Masstransit.Api.Auth.csproj", "{12CA35E4-B391-4456-AACA-093EADBF7574}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +91,10 @@ Global
 		{BB2916E9-76A3-4623-A61E-D20B18EB442F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB2916E9-76A3-4623-A61E-D20B18EB442F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB2916E9-76A3-4623-A61E-D20B18EB442F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12CA35E4-B391-4456-AACA-093EADBF7574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CA35E4-B391-4456-AACA-093EADBF7574}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CA35E4-B391-4456-AACA-093EADBF7574}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CA35E4-B391-4456-AACA-093EADBF7574}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +119,7 @@ Global
 		{5E2A6326-E2B3-4712-8804-922FDEB21B93} = {99CA925C-5257-43DE-B4B4-2F6A91A2B299}
 		{B80C321C-29FA-4C94-9A2B-E2DE9D0BAA23} = {BAC25893-A2A4-426B-8958-1F1E45C90DE9}
 		{BB2916E9-76A3-4623-A61E-D20B18EB442F} = {B80C321C-29FA-4C94-9A2B-E2DE9D0BAA23}
+		{12CA35E4-B391-4456-AACA-093EADBF7574} = {A05EB725-6AD8-4F19-AA8E-EFBE2D3A0983}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {185137BE-5323-4962-8A24-705FDEBDB37A}
