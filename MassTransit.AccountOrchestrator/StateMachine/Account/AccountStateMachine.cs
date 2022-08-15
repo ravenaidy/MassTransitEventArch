@@ -1,6 +1,7 @@
 ﻿using MassTransit.AccountOrchestrator.Events;
+using MassTransit.AccountOrchestrator.Events.Accounts;
 
-namespace MassTransit.AccountOrchestrator.StateMachine
+namespace MassTransit.AccountOrchestrator.StateMachine.Account
 {
     public sealed class AccountStateMachine : MassTransitStateMachine<AccountState>
     {
@@ -49,14 +50,14 @@ namespace MassTransit.AccountOrchestrator.StateMachine
                         FirstName = context.Saga.Firstname,
                         LastName = context.Saga.Lastname,
                         Gender = (int)context.Saga.Gender,
-                        PhoneNumber = context.Saga.PhoneNumber,
-                        AddressLine1 = context.Saga.AddressLine1,
-                        AddressLine2 = context.Saga.AddressLine2,
-                        AddressLine3 = context.Saga.AddressLine3,
-                        City = context.Saga.City,
-                        Country = context.Saga.Country,
-                        PostalCode = context.Saga.PostalCode,
-                        Email = context.Saga.Email
+                        context.Saga.PhoneNumber,
+                        context.Saga.AddressLine1,
+                        context.Saga.AddressLine2,
+                        context.Saga.AddressLine3,
+                        context.Saga.City,
+                        context.Saga.Country,
+                        context.Saga.PostalCode,
+                        context.Saga.Email
                     }))
                     .TransitionTo(CreateAccount));
 
@@ -64,8 +65,7 @@ namespace MassTransit.AccountOrchestrator.StateMachine
                 When(AccountCreatedEvent)
                     .Produce(context => context.Init<AccountCreated>(new
                     {
-                        IsRegistered = true,
-                        CreatedTimeStamp = context.Message.CreatedTimeStamp
+                        IsRegistered = true, context.Message.CreatedTimeStamp
                     }))
                     .Finalize()
             );

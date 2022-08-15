@@ -1,7 +1,7 @@
 ﻿using System;
 using MassTransit.AccountOrchestrator.Models;
 
-namespace MassTransit.AccountOrchestrator.StateMachine
+namespace MassTransit.AccountOrchestrator.StateMachine.Account
 {
     public class AccountState : SagaStateMachineInstance
     {

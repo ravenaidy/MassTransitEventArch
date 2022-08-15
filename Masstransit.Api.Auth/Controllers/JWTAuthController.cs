@@ -1,46 +1,22 @@
-using System;
-using System.Globalization;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using Masstransit.Api.Auth.DTO;
-using Masstransit.Api.Auth.Helpers;
+using Masstransit.Api.Auth.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
-namespace Masstransit.Api.Auth.Controllers
-{
+namespace Masstransit.Api.Auth.Controllers;
+
     [Route("api/[controller]")]
     [ApiController]
-    public class JWTAuthController : ControllerBase
+    public class JwtAuthController : ControllerBase
     {
-        private readonly JWTConfiguration _jwtConfiguration;
+        private readonly ITokenService _tokenService;
 
-        public JWTAuthController(JWTConfiguration jwtConfiguration)
+        public JwtAuthController(ITokenService tokenService)
         {
-            _jwtConfiguration = jwtConfiguration ?? throw new ArgumentNullException(nameof(jwtConfiguration));
+            _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
         }
-        public Task<IActionResult> GetToken(Login login)
+        public async Task<IActionResult> GetToken(Login login)
         {
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, _jwtConfiguration.Subject),
-                new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Iat,
-                    DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
-                new Claim("UserId", login.UserId.ToString()),
-                new Claim("Username", login.Username)
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfiguration.Key));
-            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(_jwtConfiguration.Issuer,
-                _jwtConfiguration.Audience,
-                claims,
-                expires: DateTime.UtcNow.AddMinutes(60),
-                signingCredentials: signIn);
-            return OkObjectResult(new JwtSecurityTokenHandler().WriteToken(token));
+            return Ok(await _tokenService.GenerateToken(login));
         }
     }
-}
+

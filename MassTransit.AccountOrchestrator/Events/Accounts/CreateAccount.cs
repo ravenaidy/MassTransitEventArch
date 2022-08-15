@@ -1,7 +1,7 @@
 ﻿using System;
 using MassTransit.AccountOrchestrator.Models;
 
-namespace MassTransit.AccountOrchestrator.Events
+namespace MassTransit.AccountOrchestrator.Events.Accounts
 {
     public record CreateAccount : CorrelatedBy<Guid>
     {

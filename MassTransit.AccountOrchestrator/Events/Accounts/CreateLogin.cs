@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MassTransit.AccountOrchestrator.Events
+namespace MassTransit.AccountOrchestrator.Events.Accounts
 {
     public class CreateLogin : CorrelatedBy<Guid>
     {

@@ -1,7 +1,7 @@
 using MassTransit.AccountOrchestrator;
-using MassTransit.AccountOrchestrator.Events;
-using MassTransit.AccountOrchestrator.StateMachine;
 using MassTransit;
+using MassTransit.AccountOrchestrator.Events.Accounts;
+using MassTransit.AccountOrchestrator.StateMachine.Account;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
