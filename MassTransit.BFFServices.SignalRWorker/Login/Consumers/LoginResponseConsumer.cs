@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR.Client;
 
-namespace MassTransit.BFFServices.SignalRWorker.Account.Consumers
+namespace MassTransit.BFFServices.SignalRWorker.Login.Consumers
 {
     public class LoginResponseConsumer : IConsumer<Models.Login>
     {

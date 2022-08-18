@@ -1,7 +1,10 @@
 using MassTransit.AccountOrchestrator;
 using MassTransit;
+using MassTransit.AccountOrchestrator.Dependencies;
 using MassTransit.AccountOrchestrator.Events.Accounts;
+using MassTransit.AccountOrchestrator.Events.Login;
 using MassTransit.AccountOrchestrator.StateMachine.Account;
+using MassTransit.AccountOrchestrator.StateMachine.Login;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -10,27 +13,31 @@ var host = Host.CreateDefaultBuilder(args)
     {
         var config = host.Configuration;
         services.AddHostedService<Worker>();
+        services.AddLoginStateMachineSettings(config);
 
         services.AddMassTransit(bus =>
             {
                 bus.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host(config["RabbitMq:Config:Host"], host => 
+                    cfg.Host(config["RabbitMq:Config:Host"], massTransitHost => 
                     {
-                        host.Username(config["RabbitMq:Config:Username"]);
-                        host.Password(config["RabbitMq:Config:Password"]);
+                        massTransitHost.Username(config["RabbitMq:Config:Username"]);
+                        massTransitHost.Password(config["RabbitMq:Config:Password"]);
                     });
                 
                     cfg.ConfigureEndpoints(context);
                 });
-                
+
                 bus.AddRider(rider =>
                 {
                     rider.AddSagaStateMachine<AccountStateMachine, AccountState>().InMemoryRepository();
+                    rider.AddSagaStateMachine<LoginStateMachine, LoginState>().InMemoryRepository();
 
                     rider.AddProducer<CreateLogin>(config["Kafka:Config:CreateLoginTopic"]);
                     rider.AddProducer<CreateAccount>(config["Kafka:Config:CreateAccountTopic"]);
                     rider.AddProducer<AccountCreated>(config["Kafka:Config:AccountRegisteredTopic"]);
+                    rider.AddProducer<LoginRequest>(config["Kafka:Config:GetLoginTopic"]);
+                    rider.AddProducer<AuthLogin>(config["Kafka:Config:LoginAuthResponseTopic"]);
 
                     rider.UsingKafka((context, kafka) =>
                         {
@@ -54,6 +61,19 @@ var host = Host.CreateDefaultBuilder(args)
                                 c =>
                                 {
                                     c.ConfigureSaga<AccountState>(context);
+                                });
+
+                            kafka.TopicEndpoint<LoginRequest>(config["Kafka:Config:LoginRequestTopic"],
+                                config["Kafka:Config:LoginGroup"],
+                                c =>
+                                {
+                                    c.ConfigureSaga<LoginState>(context);
+                                });
+                            kafka.TopicEndpoint<LoginResponse>(config["Kafka:Config:LoginResponseTopic"],
+                                config["Kafka:Config:LoginGroup"],
+                                c =>
+                                {
+                                    c.ConfigureSaga<LoginState>(context);
                                 });
                         }
                     );

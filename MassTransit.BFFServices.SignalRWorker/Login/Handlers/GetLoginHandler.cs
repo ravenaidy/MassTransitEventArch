@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MassTransit.BFFServices.SignalRWorker.Account.Queries;
+using MassTransit.BFFServices.SignalRWorker.Login.Queries;
 using MediatR;
 
-namespace MassTransit.BFFServices.SignalRWorker.Account.Handlers
+namespace MassTransit.BFFServices.SignalRWorker.Login.Handlers
 {
     public class GetLoginHandler : IRequestHandler<GetLoginRequest>
     {

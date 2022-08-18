@@ -8,15 +8,22 @@ namespace Masstransit.Api.Auth.Controllers;
     [ApiController]
     public class JwtAuthController : ControllerBase
     {
+        private readonly ILogger<JwtAuthController> _logger;
         private readonly ITokenService _tokenService;
 
-        public JwtAuthController(ITokenService tokenService)
+        public JwtAuthController(ILogger<JwtAuthController> logger, ITokenService tokenService)
         {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
         }
-        public async Task<IActionResult> GetToken(Login login)
+
+        [Route("gettoken")]
+        public async Task<IActionResult> GetToken([FromBody] Login login)
         {
-            return Ok(await _tokenService.GenerateToken(login));
+            var token = await _tokenService.GenerateToken(login);
+            _logger.LogInformation($"This is the token:{token}");
+
+            return Ok(token);
         }
     }
 

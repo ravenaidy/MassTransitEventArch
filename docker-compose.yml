@@ -25,8 +25,7 @@ services:
       - kafkabroker
       - kafka-ui
       - init-kafka
-      - loginservice
-      - masstransitapi
+      - loginservice      
         
   accountservice:
     image: ${DOCKER_REGISTRY-}accountservice
@@ -92,13 +91,13 @@ services:
     ports:
       - "80:80"    
       
-  masstransitapi:
-    image: ${DOCKER_REGISTRY-}masstransitapi
+  masstransitapiauth:
+    image: ${DOCKER_REGISTRY-}masstransitapiauth
     ports:
       - "5058:80"      
     build:
       context: .
-      dockerfile: ./MassTransitApi/Dockerfile
+      dockerfile: ./Masstransit.Api.Auth/Dockerfile
     depends_on:      
       - masstransitdb
       - zookeeper
@@ -158,6 +157,8 @@ services:
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-account-getaccount --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-account-registered --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-loginresponse --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-loginrequest --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-loginauthresponse --replication-factor 1 --partitions 1      
       
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka:kafkabroker --list

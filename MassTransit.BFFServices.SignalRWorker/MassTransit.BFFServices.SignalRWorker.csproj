@@ -21,6 +21,11 @@
     
     <ItemGroup>
       <ProjectReference Include="..\MassTransit.Shared.Infrastructure\MassTransit.Shared.Infrastructure.csproj" />
+    </ItemGroup>   
+    
+    <ItemGroup>
+      <Folder Include="Account\Queries\" />
+      <Folder Include="Login\Commands\" />
     </ItemGroup>
     
 </Project>

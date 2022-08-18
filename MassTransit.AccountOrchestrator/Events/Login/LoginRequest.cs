@@ -2,5 +2,10 @@
 
 namespace MassTransit.AccountOrchestrator.Events.Login
 {
-    public record LoginRequest(Guid CorrelationId, string Username, string Password) : CorrelatedBy<Guid>;
+    public class LoginRequest : CorrelatedBy<Guid>
+    {
+        public Guid CorrelationId { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
 }

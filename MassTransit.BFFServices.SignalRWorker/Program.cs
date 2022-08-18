@@ -4,7 +4,8 @@ using MassTransit;
 using MassTransit.BFFServices.SignalRWorker;
 using MassTransit.BFFServices.SignalRWorker.Account.Commands;
 using MassTransit.BFFServices.SignalRWorker.Account.Consumers;
-using MassTransit.BFFServices.SignalRWorker.Account.Queries;
+using MassTransit.BFFServices.SignalRWorker.Login.Consumers;
+using MassTransit.BFFServices.SignalRWorker.Login.Queries;
 using MassTransit.BFFServices.SignalRWorker.Models;
 using MassTransit.Shared.Infrastructure.AutoMapperExtensions;
 using MediatR;
@@ -39,17 +40,18 @@ var host = Host.CreateDefaultBuilder(args)
             bus.AddRider(rider =>
             {
                 // Producers
-                rider.AddProducer<GetLoginRequest>(config["Kafka:Config:GetLoginTopic"]);
+                rider.AddProducer<GetLoginRequest>(config["Kafka:Config:LoginRequestTopic"]);
                 rider.AddProducer<NewAccountRequest>(config["Kafka:Config:RegisterAccountTopic"]);
 
                 // Consumers
                 rider.AddConsumer<LoginResponseConsumer>();
                 rider.AddConsumer<AccountRegisteredConsumer>();
+
                 rider.UsingKafka((context, kafka) =>
                 {
                     kafka.Host(config["Kafka:Config:Host"]);
 
-                    kafka.TopicEndpoint<Login>(config["Kafka:Config:LoginResponseTopic"], config["Kafka:Config:SignalRGroup"], c =>
+                    kafka.TopicEndpoint<Login>(config["Kafka:Config:LoginAuthResponseTopic"], config["Kafka:Config:SignalRGroup"], c =>
                     {
                         c.AutoOffsetReset = AutoOffsetReset.Earliest;
                         c.ConfigureConsumer<LoginResponseConsumer>(context);

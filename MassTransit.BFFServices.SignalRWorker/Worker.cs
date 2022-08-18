@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MassTransit.BFFServices.SignalRWorker.Account.Queries;
+using MassTransit.BFFServices.SignalRWorker.Login.Queries;
 using MediatR;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
