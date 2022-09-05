@@ -7,8 +7,13 @@ using MassTransit.AccountOrchestrator.StateMachine.Account;
 using MassTransit.AccountOrchestrator.StateMachine.Login;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 var host = Host.CreateDefaultBuilder(args)
+    .UseSerilog((ctx, log) =>
+    {
+        log.ReadFrom.Configuration(ctx.Configuration);
+    })
     .ConfigureServices((host, services) =>
     {
         var config = host.Configuration;

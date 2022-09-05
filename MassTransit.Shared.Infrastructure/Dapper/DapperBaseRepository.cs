@@ -27,10 +27,10 @@ namespace MassTransit.Shared.Infrastructure.Dapper
                 return _connection;
             }
         }
-        protected async Task<int> ExecuteAsync(string sql, object parameters, CommandType commandType = CommandType.StoredProcedure)
+        protected async Task ExecuteAsync(string sql, object parameters, CommandType commandType = CommandType.StoredProcedure)
         {
             var cmd = new CommandDefinition(sql, parameters, commandType: commandType);
-            return await Connection.ExecuteAsync(cmd);
+            await Connection.ExecuteAsync(cmd);
         }
 
         protected async Task<T> ExecuteScalarAsync<T>(string sql, object parameters, CommandType commandType = CommandType.StoredProcedure)

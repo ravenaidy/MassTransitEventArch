@@ -2,58 +2,53 @@ version: '3.4'
 
 services:
   loginservice:
-    image: ${DOCKER_REGISTRY-}loginservice        
+    image: ${DOCKER_REGISTRY-}loginservice
     build:
       context: .
       dockerfile: ./MassTransit.Login.LoginService/Dockerfile
-    depends_on:      
-      - masstransitdb
-      - zookeeper
-      - kafkabroker     
-      - kafka-ui
-      - init-kafka
-      - masstransitclient
-      
-  accountorchservice:
-    image: ${DOCKER_REGISTRY-}accountorchservice
-    build:
-      context: .
-      dockerfile: ./MassTransit.AccountOrchestrator/Dockerfile      
     depends_on:
-      - masstransitdb
       - zookeeper
       - kafkabroker
       - kafka-ui
       - init-kafka
-      - loginservice      
-        
+      - masstransitclient
+
+  accountorchservice:
+    image: ${DOCKER_REGISTRY-}accountorchservice
+    build:
+      context: .
+      dockerfile: ./MassTransit.AccountOrchestrator/Dockerfile
+    depends_on:
+      - zookeeper
+      - kafkabroker
+      - kafka-ui
+      - init-kafka
+      - loginservice
+
   accountservice:
     image: ${DOCKER_REGISTRY-}accountservice
     build:
       context: .
       dockerfile: ./MassTransit.Account.AccountService/Dockerfile
     depends_on:
-      - masstransitdb
       - zookeeper
       - kafkabroker
       - kafka-ui
       - init-kafka
       - loginservice
-      
+
   chatservice:
     image: ${DOCKER_REGISTRY-}chatservice
     build:
       context: .
       dockerfile: ./MassTransit.Chat.MessagesService/Dockerfile
     depends_on:
-      - masstransitdb
       - zookeeper
       - kafkabroker
       - kafka-ui
       - init-kafka
-      - loginservice
       - masstransitcouchbase
-        
+
   signalrhub:
     image: ${DOCKER_REGISTRY-}signalrhub
     ports:
@@ -61,26 +56,17 @@ services:
     build:
       context: .
       dockerfile: ./MassTransit.SignalR.SignalRService/Dockerfile
-    depends_on:
-      - masstransitdb
-      - zookeeper
-      - kafkabroker
-      - kafka-ui
-      - init-kafka
-      - loginservice
-      
+
   bffservice:
     image: ${DOCKER_REGISTRY-}bffservice
     build:
       context: .
       dockerfile: ./MassTransit.BFFServices.SignalRWorker/Dockerfile
     depends_on:
-      - masstransitdb
       - zookeeper
       - kafkabroker
       - kafka-ui
       - init-kafka
-      - loginservice
       - signalrhub
 
   masstransitclient:
@@ -89,23 +75,16 @@ services:
       context: .
       dockerfile: ./masstransit-client-app/Dockerfile
     ports:
-      - "80:80"    
-      
+      - "80:80"
+
   masstransitapiauth:
     image: ${DOCKER_REGISTRY-}masstransitapiauth
     ports:
-      - "5058:80"      
+      - "5058:80"
     build:
       context: .
       dockerfile: ./Masstransit.Api.Auth/Dockerfile
-    depends_on:      
-      - masstransitdb
-      - zookeeper
-      - kafkabroker
-      - kafka-ui
-      - init-kafka
-      - loginservice
-      
+
   masstransitdb:
     image: ${DOCKER_REGISTRY-}masstransitdb
     ports:
@@ -113,14 +92,16 @@ services:
     build:
       context: ./SQL
       dockerfile: Dockerfile
-  
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.0.1
     container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-      
+    depends_on:
+      - rabbitmq
+  
   kafkabroker:
     image: confluentinc/cp-kafka:7.0.1
     container_name: kafkabroker
@@ -135,8 +116,9 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
     depends_on:
+      - rabbitmq 
       - zookeeper
-        
+
   init-kafka:
     image: confluentinc/cp-kafka:7.0.1
     depends_on:
@@ -159,12 +141,12 @@ services:
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-loginresponse --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-loginrequest --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-loginauthresponse --replication-factor 1 --partitions 1      
-      
+
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka:kafkabroker --list
       "    
-      
-  rabbitmq:    
+
+  rabbitmq:
     container_name: 'masstransit-rabbit-queue'
     image: rabbitmq:3.10.5-management-alpine
     environment:
@@ -173,22 +155,20 @@ services:
     ports:
       - '5672:5672'
       - '15672:15672'
-    depends_on:
-      - kafkabroker
-      - kafka-ui
       
   kafka-ui:
     image: provectuslabs/kafka-ui
     container_name: "kafka-ui"
     ports:
       - "8080:8080"
-    environment:      
+    environment:
       - KAFKA_CLUSTERS_0_NAME=kafkabroker
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafkabroker:29092
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
     depends_on:
+      - rabbitmq 
       - zookeeper
-      - kafkabroker 
+      - kafkabroker
 
   masstransitcouchbase:
     image: ${DOCKER_REGISTRY-}masstransitcouchbasecouchbase
@@ -203,3 +183,13 @@ services:
     depends_on:
       - zookeeper
       - kafkabroker
+
+  masstransitseq:
+    image: ${DOCKER_REGISTRY-}datalust/seq
+    environment:
+      - ACCEPT_EULA=Y
+    volumes:
+      - /path/to/seq/data:/data
+    ports:
+      - 5341:5341
+      - 5059:80

@@ -1,8 +1,12 @@
+using System;
+using System.Threading.Tasks;
 using Masstransit.Api.Auth.DTO;
 using Masstransit.Api.Auth.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-namespace Masstransit.Api.Auth.Controllers;
+namespace Masstransit.Api.Auth.Controllers
+{
 
     [Route("api/[controller]")]
     [ApiController]
@@ -26,4 +30,4 @@ namespace Masstransit.Api.Auth.Controllers;
             return Ok(token);
         }
     }
-
+}

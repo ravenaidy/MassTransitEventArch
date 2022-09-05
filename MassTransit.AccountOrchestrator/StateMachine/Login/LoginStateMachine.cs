@@ -2,13 +2,18 @@
 using System.Security.Cryptography.X509Certificates;
 using MassTransit.AccountOrchestrator.Configuration;
 using MassTransit.AccountOrchestrator.Events.Login;
+using Microsoft.Extensions.Logging;
 
 namespace MassTransit.AccountOrchestrator.StateMachine.Login
 {
     public class LoginStateMachine : MassTransitStateMachine<LoginState>
     {
-        public LoginStateMachine(LoginStateMachineSettings settings)
+        private readonly ILogger<LoginStateMachine> _logger;
+
+        public LoginStateMachine(ILogger<LoginStateMachine> logger, LoginStateMachineSettings settings)
         {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
             Event(() => LoginRequestEvent, x => x.CorrelateById(m => m.Message.CorrelationId));
             Event(() => LoginResponseEvent, x => x.CorrelateById(m => m.Message.CorrelationId));
 
@@ -18,22 +23,34 @@ namespace MassTransit.AccountOrchestrator.StateMachine.Login
 
             Initially(
                 When(LoginRequestEvent)
-                    .Then(context => { context.Saga.Username = context.Message.Username; })
+                    .Then(context =>
+                    {
+                        logger.LogInformation("Publish Login request");
+                        context.Saga.Username = context.Message.Username;
+                    })
                     .Produce(context => context.Init<LoginRequest>(
                         new
                         {
-                            context.Message.Username, context.Message.Password
+                            context.Message.Username, context.Message.Password, context.Message.CorrelationId
                         }))
                     .TransitionTo(LoginReceived));
 
             During(LoginReceived, When(LoginResponseEvent)
-                .If(x => x.Message.UserId <= 0, x => x.Finalize())
-                .IfElse(x => x.Message.UserId > 0, x => x.Request(AuthorizedUser,
-                        x => x.Init<GetAuthToken>(new GetAuthToken(x.Message.UserId, x.Saga.Username))),
+                .If(x => x.Message.LoginId == Guid.Empty, x => x.Finalize())
+                .IfElse(x => x.Message.LoginId != Guid.Empty, x =>
+                    {
+                        _logger.LogInformation("Requesting auth token");
+                        return x.Request(AuthorizedUser,
+                            x => x.Init<GetAuthToken>(new GetAuthToken
+                            {
+                                UserId = x.Message.LoginId, Username = x.Saga.Username,
+                                CorrelationId = x.Message.CorrelationId
+                            }));
+                    },
                     x => x.TransitionTo(AuthorizedUser.Pending)));
 
             During(AuthorizedUser.Pending,
-                When(AuthorizedUser.Completed)
+                When(AuthorizedUser.Completed).Then(x => { _logger.LogInformation("Request was successful"); })
                     .Produce(context => context.Init<AuthLogin>(new
                     {
                         context.Saga.UserId,

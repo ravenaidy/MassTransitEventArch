@@ -1,10 +1,15 @@
 ﻿using System;
+using Destructurama.Attributed;
+using MassTransit.Shared.Infrastructure.Events;
 
-namespace MassTransit.BFFServices.SignalRWorker.Account.Commands
+namespace MassTransit.BFFServices.SignalRWorker.Account.Commands;
+
+public class AccountRegistered : IEvent
 {
-    public class AccountRegistered
-    {
-        public bool IsRegistered { get; set; }
-        public DateTime CreatedTimeStamp { get; set; }
-    }
+    public Guid LoginId { get; set; }
+    public bool IsRegistered { get; set; }
+    public DateTime CreatedTimeStamp { get; set; }
+    
+    [NotLogged]
+    public Guid CorrelationId { get; set; }
 }

@@ -1,4 +1,7 @@
-﻿namespace Masstransit.Api.Auth.Helpers
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Masstransit.Api.Auth.Helpers
 {
     public static class ServiceExtensions
     {

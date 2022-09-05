@@ -1,11 +1,15 @@
 ﻿using System;
+using Destructurama.Attributed;
+using MassTransit.Shared.Infrastructure.Events;
 
 namespace MassTransit.LoginService.Events
 {
-    public class LoginCreated : CorrelatedBy<Guid>
+    public class LoginCreated : IEvent
     {
-        public int LoginId { get; set; }
+        public Guid LoginId { get; set; }
         public DateTime LoginCreatedTimeStamp { get; set; }
-        public Guid CorrelationId { get; }
+        
+        [NotLogged]
+        public Guid CorrelationId { get; set; }
     }
 }

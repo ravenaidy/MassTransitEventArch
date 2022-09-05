@@ -1,4 +1,5 @@
-﻿using Masstransit.Api.Auth.DTO;
+﻿using System.Threading.Tasks;
+using Masstransit.Api.Auth.DTO;
 
 namespace Masstransit.Api.Auth.Services.Contracts
 {

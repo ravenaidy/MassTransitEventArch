@@ -10,7 +10,7 @@ namespace MassTransit.AccountOrchestrator.Dependencies
         {
             var loginStateMachineSettings = new LoginStateMachineSettings();
             configuration.GetSection("LoginStateMachineSettings").Bind(loginStateMachineSettings);
-            services.AddSingleton<LoginStateMachineSettings>(loginStateMachineSettings);
+            services.AddSingleton(loginStateMachineSettings);
 
             return services;
         }

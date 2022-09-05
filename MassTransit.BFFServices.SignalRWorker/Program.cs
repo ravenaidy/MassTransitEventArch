@@ -7,13 +7,19 @@ using MassTransit.BFFServices.SignalRWorker.Account.Consumers;
 using MassTransit.BFFServices.SignalRWorker.Login.Consumers;
 using MassTransit.BFFServices.SignalRWorker.Login.Queries;
 using MassTransit.BFFServices.SignalRWorker.Models;
+using MassTransit.BFFServices.SignalRWorker.Pipelines;
 using MassTransit.Shared.Infrastructure.AutoMapperExtensions;
 using MediatR;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 var host = Host.CreateDefaultBuilder(args)
+    .UseSerilog((ctx, log) =>
+    {
+        log.ReadFrom.Configuration(ctx.Configuration);
+    })
     .ConfigureServices((host, services) =>
     {
         var config = host.Configuration;
@@ -66,6 +72,8 @@ var host = Host.CreateDefaultBuilder(args)
         });
         
         services.AddMediatR(Assembly.GetExecutingAssembly());
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingPipeline<,>));
+        
         services.AddSingleton(sp => new HubConnectionBuilder()
             .WithUrl(config["MassTransitHub:Url"])  
             .WithAutomaticReconnect()

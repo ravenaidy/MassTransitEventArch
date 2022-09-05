@@ -13,8 +13,13 @@ using MassTransit.Shared.Infrastructure.DBConnection.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 var host = Host.CreateDefaultBuilder(args)
+    .UseSerilog((ctx, log) =>
+    {
+        log.ReadFrom.Configuration(ctx.Configuration);
+    })
     .ConfigureServices((host, services) =>
     {
         var config = host.Configuration;

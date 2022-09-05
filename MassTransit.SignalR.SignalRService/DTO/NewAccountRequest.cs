@@ -1,30 +1,48 @@
-﻿namespace MassTransit.SignalR.SignalRService.DTO
+﻿using System;
+using Destructurama.Attributed;
+using MassTransit.Shared.Infrastructure.Events;
+
+namespace MassTransit.SignalR.SignalRService.DTO;
+
+public class NewAccountRequest : IEvent
 {
-    public class NewAccountRequest 
-    {
-        public string Username { get; set; }
-     
-        public string Password { get; set; }
-        
-        public string Email { get; set; }
+    public string Username { get; set; }
 
-        public string Firstname { get; set; }
-     
-        public string Lastname { get; set; }
+    [NotLogged]
+    public string Password { get; set; }
 
-        public int Gender { get; set; }
+    [NotLogged]
+    public string Email { get; set; }
 
-        public int PhoneNumber { get; set; }
+    [NotLogged]
+    public string Firstname { get; set; }
 
-        public string AddressLine1 { get; set; }
-        
-        public string AddressLine2 { get; set; }
-        public string AddressLine3 { get; set; }
-        
-        public string City { get; set; }
-        
-        public string Country { get; set; }
-        
-        public int PostalCode { get; set; }
-    }
+    [NotLogged]
+    public string Lastname { get; set; }
+
+    public int Gender { get; set; }
+
+    [NotLogged]
+    public int PhoneNumber { get; set; }
+
+    [NotLogged]
+    public string AddressLine1 { get; set; }
+
+    [NotLogged]
+    public string AddressLine2 { get; set; }
+    
+    [NotLogged]
+    public string AddressLine3 { get; set; }
+    
+    [NotLogged]
+    public string City { get; set; }
+    
+    [NotLogged]
+    public string Country { get; set; }
+    
+    [NotLogged]
+    public int PostalCode { get; set; }
+    
+    [NotLogged]
+    public Guid CorrelationId { get; set; } = Guid.NewGuid();
 }

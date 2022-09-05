@@ -1,33 +1,48 @@
 ﻿using System;
+using Destructurama.Attributed;
 using MassTransit.AccountOrchestrator.Models;
+using MassTransit.Shared.Infrastructure.Events;
 
-namespace MassTransit.AccountOrchestrator.Events.Accounts
+namespace MassTransit.AccountOrchestrator.Events.Accounts;
+
+public class RegisterAccount : IEvent
 {
-    public class RegisterAccount : CorrelatedBy<Guid>
-    {
-        public string Email { get; set; }
-        public string Username { get; set; }
+    public Guid UserId { get; set; }
+    
+    [NotLogged]
+    public string Email { get; set; }
+    public string Username { get; set; }
 
-        public string Password { get; set; }
+    [NotLogged]
+    public string Password { get; set; }
 
-        public string Firstname { get; set; }
+    [NotLogged]
+    public string Firstname { get; set; }
 
-        public string Lastname { get; set; }
+    [NotLogged]
+    public string Lastname { get; set; }
 
-        public int PhoneNumber { get; set; }
+    [NotLogged]
+    public int PhoneNumber { get; set; }
 
-        public Gender Gender { get; set; }
+    public Gender Gender { get; set; }
 
-        public string AddressLine1 { get; set; }
+    [NotLogged]
+    public string AddressLine1 { get; set; }
 
-        public string AddressLine2 { get; set; }
+    [NotLogged]
+    public string AddressLine2 { get; set; }
+    
+    [NotLogged]
+    public string AddressLine3 { get; set; }
 
-        public string AddressLine3 { get; set; }
-
-        public string City { get; set; }
-        public string Country { get; set; }
-
-        public int PostalCode { get; set; }
-        public Guid CorrelationId { get; }
-    }
+    [NotLogged]
+    public string City { get; set; }
+    
+    [NotLogged]
+    public string Country { get; set; }
+    [NotLogged]
+    public int PostalCode { get; set; }
+    [NotLogged]
+    public Guid CorrelationId { get; set; }
 }

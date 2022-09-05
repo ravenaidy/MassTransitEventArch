@@ -2,8 +2,12 @@ using MassTransit.SignalR.SignalRService.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((ctx, log) =>
+    log.ReadFrom.Configuration(ctx.Configuration));
 
 builder.Services.AddSignalR();
 
@@ -23,6 +27,7 @@ builder.Services.AddCors(opt =>
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
 app.UseCors(corsPolicy);
 
 app.MapHub<MassTransitAccountHub>("/masstransitHub");

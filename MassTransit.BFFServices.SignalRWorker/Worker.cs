@@ -28,21 +28,16 @@ namespace MassTransit.BFFServices.SignalRWorker
         {
             await _hubConnection.StartAsync(stoppingToken);
 
-            _hubConnection.On<GetLoginRequest>("PublishGetLoginRequest", async (request) =>
-            {
-                await ProcessSignalRMessage(request, stoppingToken);
-            });
+            _hubConnection.On<GetLoginRequest>("PublishGetLoginRequest",
+                async (request) =>
+                {
+                    await ProcessSignalRMessage(request, stoppingToken);
+                });
 
             _hubConnection.On<NewAccountRequest>("PublishNewAccountRequest", async request =>
             {
                 await ProcessSignalRMessage(request, stoppingToken);
             });
-
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(10000, stoppingToken);
-            }
         }
 
         private async Task ProcessSignalRMessage<T>(T message, CancellationToken stoppingToken) where T : notnull

@@ -5,8 +5,8 @@ namespace MassTransit.AccountOrchestrator.StateMachine.Account
 {
     public class AccountState : SagaStateMachineInstance
     {
-        public Guid CorrelationId { get; set; }
-        public int AccountId { get; set; }
+        
+        public Guid UserId { get; set; }
 
         public string Email { get; set; }
 
@@ -33,5 +33,7 @@ namespace MassTransit.AccountOrchestrator.StateMachine.Account
 
         public DateTime AccountCreated { get; set; }
         public int CurrentState { get; set; }
+        
+        public Guid CorrelationId { get; set; }
     }
 }

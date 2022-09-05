@@ -9,20 +9,9 @@ namespace MassTransit.LoginService
 
     public class LoginWorker : BackgroundService
     {
-        private readonly ILogger<LoginWorker> _logger;
-
-        public LoginWorker(ILogger<LoginWorker> logger)
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger = logger;
-        }
-
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(10000, stoppingToken);
-            }
+            return Task.CompletedTask;
         }
     }
 }

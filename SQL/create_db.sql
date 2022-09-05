@@ -124,7 +124,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[Login](
-                              [LoginId] [int] IDENTITY(1,1) NOT NULL,
+                              [LoginId] [uniqueidentifier] NOT NULL,
                               [Password] [nvarchar](15) NOT NULL,
                               [Username] [nvarchar](50) NOT NULL,
                               [IsActive] [bit] NOT NULL,
@@ -254,13 +254,13 @@ GO
 -- =============================================
 CREATE PROCEDURE [dbo].[pr_RegisterLogin]
     -- Add the parameters for the stored procedure here
+    @LoginId uniqueidentifier,
     @Username NVARCHAR(50),
     @Password NVARCHAR(15)
 AS
 BEGIN
-    INSERT INTO dbo.[Login] (UserName, [Password])
-    VALUES (@Username, @Password)
-	SELECT SCOPE_IDENTITY()
+    INSERT INTO dbo.[Login] (LoginId, UserName, [Password])
+    VALUES (@LoginId, @Username, @Password)	
 END
 GO
 
@@ -417,7 +417,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[Account](
-                                [AcountId] [int] NOT NULL,
+                                [AcountId] [uniqueidentifier] NOT NULL,
                                 [Firstname] [nvarchar](50) NOT NULL,
                                 [Lastname] [nvarchar](50) NOT NULL,
                                 [Email] [nvarchar](50) NOT NULL,
@@ -460,7 +460,7 @@ GO
 -- =============================================
 CREATE PROCEDURE [dbo].[pr_RegisterAccount]
     -- Add the parameters for the stored procedure here
-    @AccountId INT,
+    @AccountId UNIQUEIDENTIFIER,
     @Firstname NVARCHAR(50),
     @LastName NVARCHAR(50),
     @Email NVARCHAR(50),

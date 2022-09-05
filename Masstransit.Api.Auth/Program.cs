@@ -1,6 +1,9 @@
 using Masstransit.Api.Auth.Helpers;
 using Masstransit.Api.Auth.Services;
 using Masstransit.Api.Auth.Services.Contracts;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -10,20 +10,19 @@ namespace MassTransit.LoginService.Repositories
     {
         public LoginRepository(IConnectionFactory connectionFactory) : base(connectionFactory)
         {
+            
         }
 
-        public async Task<int> RegisterLogin(Login login)
+        public async Task RegisterLogin(Login login)
         {
-            var parameters = new {UserName = login.Username, login.Password };
-            const string spName = "pr_RegisterLogin";
-            return await QueryFirstOrDefaultAsync<int>(spName, parameters);
+            var parameters = new {login.LoginId, UserName = login.Username, login.Password };
+            await ExecuteAsync(SPConstants.SPRegisterLogin, parameters);
         }
 
         public async Task<Login> GetLogin(string username, string password)
         {
             var parameters = new {UserName = username, Password = password};
-            const string spName = "pr_GetLoginByUsernameAndPassword";
-            return await QueryFirstOrDefaultAsync<Login>(spName, parameters);
+            return await QueryFirstOrDefaultAsync<Login>(SPConstants.SPGetLoginByUsernameAndPassword, parameters);
         }
     }
 }
