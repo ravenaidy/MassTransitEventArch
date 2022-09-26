@@ -36,7 +36,7 @@ public class CreateLoginConsumer : IConsumer<CreateLogin>
                 LoginId = context.Message.LoginId, LoginCreatedTimeStamp = InVar.Timestamp,
                 CorrelationId = context.Message.CorrelationId
             };
-            _logger.LogDbSuccess(nameof(LoginService), nameof(CreateLoginConsumer), nameof(Consume), context.Message);
+            _logger.LogDbResponse(nameof(LoginService), nameof(CreateLoginConsumer), nameof(Consume), context.Message);
             
             await _producer.Produce(loginCreated);
         }

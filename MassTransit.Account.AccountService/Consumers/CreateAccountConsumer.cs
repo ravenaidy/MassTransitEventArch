@@ -38,7 +38,7 @@ public class CreateAccountConsumer : IConsumer<CreateAccount>
                 AccountId = context.Message.AccountId, CreatedTimeStamp = InVar.Timestamp,
                 CorrelationId = context.Message.CorrelationId
             };
-            _logger.LogDbSuccess(nameof(AccountService), nameof(CreateAccountConsumer), nameof(Consume), createdAccount);
+            _logger.LogDbResponse(nameof(AccountService), nameof(CreateAccountConsumer), nameof(Consume), createdAccount);
             
             await _producer.Produce(createdAccount);
         }

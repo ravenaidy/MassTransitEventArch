@@ -6,3 +6,5 @@ riderModule.iml
 /.vs/MassTransitEventArch
 /docker-compose.yml.bak
 *.user
+/.vs/ProjectEvaluation
+/UpgradeLog.htm

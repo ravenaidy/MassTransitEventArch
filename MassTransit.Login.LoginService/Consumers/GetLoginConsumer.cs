@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using MassTransit.LoginService.Events;
-using MassTransit.LoginService.Models;
 using MassTransit.LoginService.Repositories.Contracts;
 using MassTransit.Shared.Infrastructure.Logger;
 using Microsoft.Extensions.Logging;
@@ -34,14 +33,14 @@ public class GetLoginConsumer : IConsumer<GetLogin>
                 context.Message.Password)) ?? new LoginResponse {LoginId = Guid.Empty};
             login.CorrelationId = context.Message.CorrelationId;
             
-            _logger.LogDbSuccess(nameof(LoginService), nameof(GetLoginConsumer), nameof(Consume), login);
+            _logger.LogDbResponse(nameof(LoginService), nameof(GetLoginConsumer), nameof(Consume), login);
 
             await _producer.Produce(login);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, nameof(LoginService),nameof(GetLoginConsumer),  nameof(Consume),
-                context.Message.CorrelationId);
+            _logger.LogError(nameof(LoginService),nameof(GetLoginConsumer),  nameof(Consume),
+                context.Message.CorrelationId, ex);
             throw;
         }
     }

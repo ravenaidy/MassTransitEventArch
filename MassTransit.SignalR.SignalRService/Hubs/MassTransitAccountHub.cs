@@ -9,9 +9,9 @@ namespace MassTransit.SignalR.SignalRService.Hubs
 {
     public class MassTransitAccountHub : Hub
     {
-        private readonly ILogger<MassTransitAccountHub> _logger;
+        private readonly ILogger _logger;
 
-        public MassTransitAccountHub(ILogger<MassTransitAccountHub> logger)
+        public MassTransitAccountHub(ILogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
