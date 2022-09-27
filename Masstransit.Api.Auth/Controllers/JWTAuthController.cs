@@ -1,33 +1,24 @@
-using System;
-using System.Threading.Tasks;
 using Masstransit.Api.Auth.DTO;
 using Masstransit.Api.Auth.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
-namespace Masstransit.Api.Auth.Controllers
+namespace Masstransit.Api.Auth.Controllers ;
+
+
+[Route("api/[controller]")]
+[ApiController]
+public class JwtAuthController : ControllerBase
 {
+    private readonly ITokenService _tokenService;
 
-    [Route("api/[controller]")]
-    [ApiController]
-    public class JwtAuthController : ControllerBase
+    public JwtAuthController(ITokenService tokenService)
     {
-        private readonly ILogger<JwtAuthController> _logger;
-        private readonly ITokenService _tokenService;
+        _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
+    }
 
-        public JwtAuthController(ILogger<JwtAuthController> logger, ITokenService tokenService)
-        {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));
-        }
-
-        [Route("gettoken")]
-        public async Task<IActionResult> GetToken([FromBody] Login login)
-        {
-            var token = await _tokenService.GenerateToken(login);
-            _logger.LogInformation($"This is the token:{token}");
-
-            return Ok(token);
-        }
+    [Route("gettoken")]
+    public async Task<IActionResult> GetToken([FromBody] Login login)
+    {
+        return Ok(await _tokenService.GenerateToken(login));
     }
 }

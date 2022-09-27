@@ -9,12 +9,13 @@ namespace MassTransit.SignalR.SignalRService.Hubs
 {
     public class MassTransitAccountHub : Hub
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<MassTransitAccountHub> _logger;
 
-        public MassTransitAccountHub(ILogger logger)
+        public MassTransitAccountHub(ILogger<MassTransitAccountHub> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
         public async Task SendLoginRequest(GetLoginRequest request)
         {
             _logger.LogHubInformation(nameof(SignalRService), nameof(MassTransitAccountHub), nameof(SendLoginRequest),
@@ -28,9 +29,12 @@ namespace MassTransit.SignalR.SignalRService.Hubs
                 login);
             await Clients.All.SendAsync("PublishLogin", login);
         }
+
         public async Task SendNewAccountRequest(NewAccountRequest request)
         {
-            _logger.LogHubInformation(nameof(SignalRService), nameof(MassTransitAccountHub), nameof(SendNewAccountRequest),
+
+            _logger.LogHubInformation(nameof(SignalRService), nameof(MassTransitAccountHub),
+                nameof(SendNewAccountRequest),
                 request);
             await Clients.All.SendAsync("PublishNewAccountRequest", request);
         }

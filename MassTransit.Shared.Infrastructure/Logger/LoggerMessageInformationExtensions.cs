@@ -39,24 +39,24 @@ public partial class LoggerExtensions
   public static void LogRequest(this ILogger logger, string serviceName, string className, string methodName,
     IEvent message)
   {
-    Log(() => _requestInfoProcessor(logger, serviceName, className, methodName, message, null!), message.CorrelationId);
+    Log(() => _requestInfoProcessor(logger, serviceName, className, methodName, message, null!), message.CorrelationId.ToString());
   }
 
   public static void LogEvent(this ILogger logger, string serviceName, string className, string methodName,
     IEvent message)
   {
-    Log(() => _eventInfoProcessor(logger, serviceName, className, methodName, message, null!), message.CorrelationId);
+    Log(() => _eventInfoProcessor(logger, serviceName, className, methodName, message, null!), message.CorrelationId.ToString());
   }
 
   public static void LogHandlerRequest(this ILogger logger, string serviceName, string className, string methodName,
     IEvent message)
   {
-    Log(() => _handlerRequestInfoProcessor(logger, serviceName, className, methodName, message, null!), message.CorrelationId);
+    Log(() => _handlerRequestInfoProcessor(logger, serviceName, className, methodName, message, null!), message.CorrelationId.ToString());
   }
   public static void LogHandlerResponse(this ILogger logger, string serviceName, string className, string methodName,
     IEvent message)
   {
-    Log(() => _handlerResponseInfoProcessor(logger, serviceName, className, methodName, message, null!), message.CorrelationId);
+    Log(() => _handlerResponseInfoProcessor(logger, serviceName, className, methodName, message, null!), message.CorrelationId.ToString());
   }
 }
 

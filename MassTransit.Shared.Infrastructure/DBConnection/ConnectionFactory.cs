@@ -10,7 +10,7 @@ namespace MassTransit.Shared.Infrastructure.DBConnection
 
         public ConnectionFactory(string connectionString)
         {
-            _connectionString = connectionString ?? throw new ArgumentException(nameof(connectionString));
+            _connectionString = connectionString ?? throw new ArgumentException(null, nameof(connectionString));
         }
 
         public IDbConnection CreateOpenConnection()

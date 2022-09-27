@@ -30,7 +30,7 @@ public class CreateLoginConsumer : IConsumer<CreateLogin>
         _logger.LogDbRequest(nameof(LoginService), nameof(CreateLoginConsumer), nameof(Consume), context.Message);
         try
         {
-            await _loginRepository.RegisterLogin(_mapper.Map<Login>(context.Message));
+            await _loginRepository.RegisterLogin(context.Message);
             var loginCreated = new LoginCreated
             {
                 LoginId = context.Message.LoginId, LoginCreatedTimeStamp = InVar.Timestamp,
@@ -42,8 +42,8 @@ public class CreateLoginConsumer : IConsumer<CreateLogin>
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, nameof(LoginService), nameof(CreateLoginConsumer), nameof(Consume),
-                context.Message.CorrelationId);
+            _logger.LogError(nameof(LoginService), nameof(CreateLoginConsumer), nameof(Consume),
+                context.Message.CorrelationId.ToString(), ex);
             throw;
         }
     }

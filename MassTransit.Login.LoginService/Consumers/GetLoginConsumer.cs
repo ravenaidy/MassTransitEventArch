@@ -29,8 +29,8 @@ public class GetLoginConsumer : IConsumer<GetLogin>
         
         try
         {
-            var login = _mapper.Map<LoginResponse>(await _loginRepository.GetLogin(context.Message.Username,
-                context.Message.Password)) ?? new LoginResponse {LoginId = Guid.Empty};
+            var login = _mapper.Map<LoginResponse>(await _loginRepository.GetLogin(context.Message)) ??
+                        new LoginResponse {LoginId = Guid.Empty};
             login.CorrelationId = context.Message.CorrelationId;
             
             _logger.LogDbResponse(nameof(LoginService), nameof(GetLoginConsumer), nameof(Consume), login);
@@ -40,7 +40,7 @@ public class GetLoginConsumer : IConsumer<GetLogin>
         catch (Exception ex)
         {
             _logger.LogError(nameof(LoginService),nameof(GetLoginConsumer),  nameof(Consume),
-                context.Message.CorrelationId, ex);
+                context.Message.CorrelationId.ToString(), ex);
             throw;
         }
     }

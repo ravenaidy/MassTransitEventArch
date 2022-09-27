@@ -23,4 +23,8 @@
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.22.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MassTransit.Shared.Infrastructure\MassTransit.Shared.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>

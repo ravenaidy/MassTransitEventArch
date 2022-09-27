@@ -30,8 +30,7 @@ public class CreateAccountConsumer : IConsumer<CreateAccount>
         
         try
         {
-            var account = _mapper.Map<Models.Account>(context.Message);
-            await _accountRepository.RegisterAccount(account);
+            await _accountRepository.RegisterAccount(context.Message);
 
             var createdAccount = new AccountCreated
             {
@@ -44,8 +43,8 @@ public class CreateAccountConsumer : IConsumer<CreateAccount>
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, nameof(AccountService),nameof(CreateAccountConsumer),  nameof(Consume),
-                context.Message.CorrelationId);
+            _logger.LogError(nameof(AccountService), nameof(CreateAccountConsumer), nameof(Consume),
+                context.Message.CorrelationId.ToString(), ex);
             throw;
         }
     }

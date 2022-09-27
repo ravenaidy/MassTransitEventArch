@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MassTransit.BFFServices.SignalRWorker.Account.Commands;
+using MassTransit.Shared.Infrastructure.Logger;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Logging;
 
@@ -19,10 +20,9 @@ namespace MassTransit.BFFServices.SignalRWorker.Account.Consumers
 
         public async Task Consume(ConsumeContext<AccountRegistered> context)
         {
+            _logger.LogPublishToHubInformation(nameof(BFFServices), nameof(AccountRegisteredConsumer), nameof(Consume),
+                context.Message);
             await _hubContext.InvokeAsync("SendAccountCreated", context.Message);
-
-            _logger.LogInformation("{Service} {Class} {Method} successfully published registered account to Hub",
-                nameof(BFFServices), nameof(AccountRegisteredConsumer), nameof(Consume));
         }
     }
 }

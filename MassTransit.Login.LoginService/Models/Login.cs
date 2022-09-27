@@ -1,4 +1,5 @@
 ﻿using System;
+using Dapper.Contrib.Extensions;
 
 namespace MassTransit.LoginService.Models
 {

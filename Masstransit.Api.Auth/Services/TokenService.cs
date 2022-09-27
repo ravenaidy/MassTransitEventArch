@@ -42,7 +42,6 @@ namespace Masstransit.Api.Auth.Services
                 signingCredentials: signIn);
 
             return Task.Run(() => new JwtSecurityTokenHandler().WriteToken(token));
-
         }
     }
 }
