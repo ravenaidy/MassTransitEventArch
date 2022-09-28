@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MassTransit.AccountOrchestrator.Events.Accounts;
+using MassTransit.AccountOrchestrator.StateMachine.Account;
+using MassTransit.Orchestrator.Events.Accounts;
 using MassTransit.Shared.Infrastructure.Logger;
 using Microsoft.Extensions.Logging;
 
-namespace MassTransit.AccountOrchestrator.StateMachine.Account;
+namespace MassTransit.Orchestrator.StateMachine.Account;
 
 public sealed class AccountStateMachine : MassTransitStateMachine<AccountState>
 {

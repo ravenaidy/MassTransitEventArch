@@ -2,14 +2,14 @@
 using Destructurama.Attributed;
 using MassTransit.Shared.Infrastructure.Events;
 
-namespace MassTransit.AccountOrchestrator.Events.Accounts;
+namespace MassTransit.Orchestrator.Events.Accounts;
 
-public class AccountCreated : IEvent
+public class LoginCreated : IEvent
 {
     public Guid LoginId { get; set; }
-
-    public bool IsRegistered { get; init; }
-    public DateTime CreatedTimeStamp { get; init; }
+    
+    public DateTime LoginCreatedTimeStamp { get; set; }
+    
     [NotLogged]
     public Guid CorrelationId { get; set; }
 }

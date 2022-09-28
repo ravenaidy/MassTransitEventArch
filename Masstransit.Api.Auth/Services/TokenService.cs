@@ -21,7 +21,7 @@ namespace Masstransit.Api.Auth.Services
             _jwtConfiguration = jwtConfiguration ?? throw new ArgumentNullException(nameof(jwtConfiguration));
         }
 
-        public Task<string> GenerateToken(Login login)
+        public Task<string> GenerateToken(GetAuthToken login)
         {
             var claims = new[]
             {

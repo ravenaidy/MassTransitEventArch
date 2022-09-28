@@ -1,8 +1,8 @@
-﻿using MassTransit.AccountOrchestrator.Configuration;
+﻿using MassTransit.Orchestrator.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MassTransit.AccountOrchestrator.Dependencies
+namespace MassTransit.Orchestrator.Dependencies
 {
     public static class ServiceExtensions 
     {

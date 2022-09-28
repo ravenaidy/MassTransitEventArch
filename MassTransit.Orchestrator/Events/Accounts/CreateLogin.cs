@@ -2,7 +2,7 @@
 using Destructurama.Attributed;
 using MassTransit.Shared.Infrastructure.Events;
 
-namespace MassTransit.AccountOrchestrator.Events.Accounts;
+namespace MassTransit.Orchestrator.Events.Accounts;
 
 public class CreateLogin : IEvent
 {

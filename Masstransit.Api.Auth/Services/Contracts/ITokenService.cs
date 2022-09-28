@@ -5,6 +5,6 @@ namespace Masstransit.Api.Auth.Services.Contracts
 {
     public interface ITokenService
     {
-        Task<string> GenerateToken(Login login);
+        Task<string> GenerateToken(GetAuthToken login);
     }
 }

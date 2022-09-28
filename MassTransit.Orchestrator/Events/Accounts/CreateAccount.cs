@@ -3,7 +3,7 @@ using Destructurama.Attributed;
 using MassTransit.AccountOrchestrator.Models;
 using MassTransit.Shared.Infrastructure.Events;
 
-namespace MassTransit.AccountOrchestrator.Events.Accounts;
+namespace MassTransit.Orchestrator.Events.Accounts;
 
 public record CreateAccount : IEvent
 {

@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransitApi", "MassTrans
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Orchestration", "Orchestration", "{1EF90BBB-795F-4045-AB05-496BA36982EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.AccountOrchestrator", "MassTransit.AccountOrchestrator\MassTransit.AccountOrchestrator.csproj", "{ECACF359-461E-47D6-A2E3-B115945FEA90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Orchestrator", "MassTransit.Orchestrator\MassTransit.Orchestrator.csproj", "{ECACF359-461E-47D6-A2E3-B115945FEA90}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Account", "Account", "{04134321-C102-4E33-9D6D-3F843F149AAC}"
 EndProject

@@ -1,10 +1,13 @@
 using MassTransit.AccountOrchestrator;
 using MassTransit;
-using MassTransit.AccountOrchestrator.Dependencies;
-using MassTransit.AccountOrchestrator.Events.Accounts;
 using MassTransit.AccountOrchestrator.Events.Login;
 using MassTransit.AccountOrchestrator.StateMachine.Account;
 using MassTransit.AccountOrchestrator.StateMachine.Login;
+using MassTransit.Orchestrator;
+using MassTransit.Orchestrator.Dependencies;
+using MassTransit.Orchestrator.Events.Accounts;
+using MassTransit.Orchestrator.StateMachine.Account;
+using MassTransit.Orchestrator.StateMachine.Login;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;

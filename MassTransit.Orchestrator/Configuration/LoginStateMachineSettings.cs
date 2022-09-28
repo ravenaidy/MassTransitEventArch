@@ -1,4 +1,4 @@
-﻿namespace MassTransit.AccountOrchestrator.Configuration
+﻿namespace MassTransit.Orchestrator.Configuration
 {
     public class LoginStateMachineSettings
     {
