@@ -29,7 +29,7 @@ namespace MassTransit.LoginService.Repositories
 
         public async Task<Login> GetLogin(GetLogin login)
         {
-            var parameters = new {UserName = login.Username, Password = login.Password};
+            var parameters = new {UserName = login.Username, login.Password};
             _logger.LogProcDetails(nameof(LoginService), nameof(LoginRepository), nameof(GetLogin),
                 SPConstants.SPGetLoginByUsernameAndPassword, login.CorrelationId);
             return await QueryFirstOrDefaultAsync<Login>(SPConstants.SPGetLoginByUsernameAndPassword, parameters);

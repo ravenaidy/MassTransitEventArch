@@ -23,7 +23,7 @@ public class GetLoginHandler : IRequestHandler<GetLoginRequest>
     {
         try
         {
-            await _producer.Produce(request, cancellationToken);
+          await _producer.Produce(request, cancellationToken);
         }
         catch (Exception ex)
         {

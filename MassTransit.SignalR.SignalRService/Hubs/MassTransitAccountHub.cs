@@ -25,7 +25,7 @@ namespace MassTransit.SignalR.SignalRService.Hubs
 
         public async Task SendLogin(LoginResponse login)
         {
-            _logger.LogHubInformation(nameof(SignalRService), nameof(MassTransitAccountHub), nameof(SendNewAccountRequest),
+            _logger.LogHubInformation(nameof(SignalRService), nameof(MassTransitAccountHub), nameof(SendLogin),
                 login);
             await Clients.All.SendAsync("PublishLogin", login);
         }

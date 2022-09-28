@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MassTransit.LoginService.Events;
 using MassTransit.LoginService.Repositories.Contracts;
+using MassTransit.Shared.Infrastructure.Extensions;
 using MassTransit.Shared.Infrastructure.Logger;
 using Microsoft.Extensions.Logging;
 
@@ -31,8 +32,8 @@ public class GetLoginConsumer : IConsumer<GetLogin>
         {
             var login = _mapper.Map<LoginResponse>(await _loginRepository.GetLogin(context.Message)) ??
                         new LoginResponse {LoginId = Guid.Empty};
-            login.CorrelationId = context.Message.CorrelationId;
-            
+            login.Enrich(x => x.CorrelationId = context.Message.CorrelationId);
+
             _logger.LogDbResponse(nameof(LoginService), nameof(GetLoginConsumer), nameof(Consume), login);
 
             await _producer.Produce(login);
