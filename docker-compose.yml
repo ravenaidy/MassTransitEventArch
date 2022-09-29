@@ -17,7 +17,7 @@ services:
     image: ${DOCKER_REGISTRY-}accountorchservice
     build:
       context: .
-      dockerfile: ./MassTransit.AccountOrchestrator/Dockerfile
+      dockerfile: ./MassTransit.Orchestrator/Dockerfile
     depends_on:
       - zookeeper
       - kafkabroker
@@ -141,6 +141,10 @@ services:
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-loginresponse --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-loginrequest --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-loginauthresponse --replication-factor 1 --partitions 1      
+      kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-auth-tokenrequest --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-auth-tokenresponse --replication-factor 1 --partitions 1      
+      kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-nologin --replication-factor 1 --partitions 1  
+      kafka-topics --bootstrap-server kafkabroker:29092 --create --if-not-exists --topic masstransitarch-login-loginauthresponse --replication-factor 1 --partitions 1
 
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka:kafkabroker --list

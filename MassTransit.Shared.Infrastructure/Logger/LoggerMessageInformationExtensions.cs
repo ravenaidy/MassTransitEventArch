@@ -7,6 +7,8 @@ namespace MassTransit.Shared.Infrastructure.Logger;
 public partial class LoggerExtensions
 {
   private const string RequestInformationTemplate = "{Service} {Class} {Method} send message request: {@Message}";
+  private const string RequestTokenInformationTemplate = "{Service} {Class} {Method} requested token for: {@Message}";
+  private const string TokenResponseInformationTemplate = "{Service} {Class} {Method} generated token response: {@Message}";
   private const string NotFoundInformationTemplate = "No record found during {Event}: A {@Message} was published";
   private const string EventInformationTemplate = "{Service} {Class} {Method} publishing message: {@Message} to message bus";
   private const string HandlerRequestInformationTemplate = "{Service} {Class} {Method} handler request: {@Message}";
@@ -17,6 +19,19 @@ public partial class LoggerExtensions
       LogLevel.Information,
       new EventId(100, ""),
       RequestInformationTemplate);
+
+  private static readonly Action<ILogger, string, string, string, IEvent, Exception> _requestTokenInfoProcessor =
+    LoggerMessage.Define<string, string, string, IEvent>(
+      LogLevel.Information,
+      new EventId(100, ""),
+      RequestTokenInformationTemplate);
+
+  private static readonly Action<ILogger, string,string, string, IEvent, Exception> _tokenResponseProcessor =
+    LoggerMessage.Define<string, string, string, IEvent>(
+      LogLevel.Information,
+      new EventId(100, ""),
+      TokenResponseInformationTemplate);
+
 
   private static readonly Action<ILogger, string, string, string, IEvent, Exception> _eventInfoProcessor =
     LoggerMessage.Define<string, string, string, IEvent>(
@@ -42,11 +57,22 @@ public partial class LoggerExtensions
       new EventId(100, ""),
       NotFoundInformationTemplate);
 
-
   public static void LogRequest(this ILogger logger, string serviceName, string className, string methodName,
     IEvent message)
   {
     Log(() => _requestInfoProcessor(logger, serviceName, className, methodName, message, null!), message.CorrelationId.ToString());
+  }
+
+  public static void LogRequestToken(this ILogger logger, string serviceName, string className, string methodName,
+    IEvent message)
+  {
+    Log(() => _requestTokenInfoProcessor(logger, serviceName, className, methodName, message, null!), message.CorrelationId.ToString());
+  }
+
+  public static void LogTokenResponse(this ILogger logger, string serviceName, string className, string methodName,
+    IEvent message)
+  {
+    Log(() => _tokenResponseProcessor(logger, serviceName, className, methodName, message, null!), message.CorrelationId.ToString());
   }
 
   public static void LogEvent(this ILogger logger, string serviceName, string className, string methodName,

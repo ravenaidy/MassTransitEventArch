@@ -1,7 +1,7 @@
 ﻿using System;
 using MassTransit.Shared.Infrastructure.Events;
 
-namespace MassTransit.AccountOrchestrator.Events.Login
+namespace MassTransit.Orchestrator.Events.Login
 {
     public class LoginResponse : IEvent
     {

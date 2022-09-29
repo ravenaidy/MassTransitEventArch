@@ -15,7 +15,8 @@ namespace MassTransit.Shared.Infrastructure.Dapper
 
         protected DapperBaseRepository(IConnectionFactory connectionFactory)
         {
-            _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
+          if (connectionFactory == null) throw new ArgumentNullException(nameof(connectionFactory));
+          _connectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(connectionFactory));
         }
 
         private IDbConnection Connection
@@ -61,7 +62,7 @@ namespace MassTransit.Shared.Infrastructure.Dapper
             }
             catch { }
 
-            _connection = null;
+            _connection = null!;
         }
     }
 }

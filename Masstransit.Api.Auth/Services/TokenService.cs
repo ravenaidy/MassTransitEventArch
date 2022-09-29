@@ -1,10 +1,8 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
-using Masstransit.Api.Auth.DTO;
+using Masstransit.Api.Auth.Events;
 using Masstransit.Api.Auth.Helpers;
 using Masstransit.Api.Auth.Services.Contracts;
 using Microsoft.IdentityModel.Tokens;

@@ -10,6 +10,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Constants\**" />
+      <Content Remove="Constants\**" />
+      <EmbeddedResource Remove="Constants\**" />
+      <None Remove="Constants\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Dapper.Contrib" Version="2.0.78" />
         <PackageReference Include="Destructurama.Attributed" Version="3.0.0" />
         <PackageReference Include="FluentValidation" Version="11.0.1" />
@@ -31,9 +38,5 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MassTransit.Shared.Infrastructure\MassTransit.Shared.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Constants" />
     </ItemGroup>
 </Project>
