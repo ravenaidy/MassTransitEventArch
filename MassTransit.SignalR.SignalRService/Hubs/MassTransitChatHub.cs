@@ -1,10 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using MassTransit.SignalR.SignalRService.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace MassTransit.SignalR.SignalRService.Hubs
 {
+    [Authorize]
     public class MassTransitChatHub : Hub
     {
         public async Task SendMessage(string group, ChatMessage message)

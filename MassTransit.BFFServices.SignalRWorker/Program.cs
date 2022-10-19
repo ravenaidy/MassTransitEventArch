@@ -5,6 +5,7 @@ using MassTransit.BFFServices.SignalRWorker;
 using MassTransit.BFFServices.SignalRWorker.Account.Commands;
 using MassTransit.BFFServices.SignalRWorker.Account.Consumers;
 using MassTransit.BFFServices.SignalRWorker.Login.Consumers;
+using MassTransit.BFFServices.SignalRWorker.Login.Events;
 using MassTransit.BFFServices.SignalRWorker.Login.Queries;
 using MassTransit.BFFServices.SignalRWorker.Models;
 using MassTransit.BFFServices.SignalRWorker.Pipelines;
@@ -50,6 +51,7 @@ var host = Host.CreateDefaultBuilder(args)
                 rider.AddProducer<NewAccountRequest>(config["Kafka:Config:RegisterAccountTopic"]);
 
                 // Consumers
+                rider.AddConsumer<NoLoginFoundConsumer>();
                 rider.AddConsumer<LoginResponseConsumer>();
                 rider.AddConsumer<AccountRegisteredConsumer>();
 
@@ -66,6 +68,11 @@ var host = Host.CreateDefaultBuilder(args)
                     {
                         c.AutoOffsetReset = AutoOffsetReset.Earliest;
                         c.ConfigureConsumer<AccountRegisteredConsumer>(context);
+                    });
+                    kafka.TopicEndpoint<NoLogin>(config["Kafka:Config:NoLoginTopic"], config["Kafka:Config:SignalRGroup"], c =>
+                    {
+                        c.AutoOffsetReset = AutoOffsetReset.Earliest;
+                        c.ConfigureConsumer<NoLoginFoundConsumer>(context);
                     });
                 });
             });

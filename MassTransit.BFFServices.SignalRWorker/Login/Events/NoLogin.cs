@@ -1,7 +1,7 @@
 using System;
 using MassTransit.Shared.Infrastructure.Events;
 
-namespace MassTransit.Orchestrator.Events.Login;
+namespace MassTransit.BFFServices.SignalRWorker.Login.Events;
 
 public class NoLogin : IEvent
 {

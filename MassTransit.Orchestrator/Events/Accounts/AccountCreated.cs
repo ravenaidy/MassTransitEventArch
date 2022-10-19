@@ -6,7 +6,7 @@ namespace MassTransit.Orchestrator.Events.Accounts;
 
 public class AccountCreated : IEvent
 {
-    public Guid LoginId { get; set; }
+    public Guid AccountId { get; set; }
 
     public bool IsRegistered { get; init; }
     public DateTime CreatedTimeStamp { get; init; }

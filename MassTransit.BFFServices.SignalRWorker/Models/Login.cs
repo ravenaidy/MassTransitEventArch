@@ -5,11 +5,11 @@ namespace MassTransit.BFFServices.SignalRWorker.Models
 {
     public class Login : IEvent
     {
-        public int LoginId { get; set; }
+        public Guid LoginId { get; init; }
 
-        public string Username { get; set; }
+        public string Username { get; init; }
 
-        public string Token { get; set; }
+        public string Token { get; init; }
         public Guid CorrelationId { get; set; }
     }
 }

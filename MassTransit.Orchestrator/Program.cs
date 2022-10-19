@@ -46,7 +46,7 @@ var host = Host.CreateDefaultBuilder(args)
             rider.AddProducer<AuthLogin>(config["Kafka:Config:LoginResponseTopic"]);
             rider.AddProducer<GetAuthToken>(config["Kafka:Config:TokenRequestTopic"]);
             rider.AddProducer<NoLogin>(config["Kafka:Config:NoLoginTopic"]);
-            rider.AddProducer<AuthLogin>(config["Kafka:Config:LoginAuthResponseTopic"]);
+            rider.AddProducer<AuthLoginResponse>(config["Kafka:Config:LoginAuthResponseTopic"]);
 
             rider.UsingKafka((context, kafka) =>
               {
@@ -67,6 +67,10 @@ var host = Host.CreateDefaultBuilder(args)
                   config["Kafka:Config:LoginGroup"],
                   c => { c.ConfigureSaga<LoginState>(context); });
                 kafka.TopicEndpoint<LoginResponse>(config["Kafka:Config:LoginResponseTopic"],
+                  config["Kafka:Config:LoginGroup"],
+                  c => { c.ConfigureSaga<LoginState>(context); });
+                
+                kafka.TopicEndpoint<AuthResponse>(config["Kafka:Config:TokenResponseTopic"],
                   config["Kafka:Config:LoginGroup"],
                   c => { c.ConfigureSaga<LoginState>(context); });
               }

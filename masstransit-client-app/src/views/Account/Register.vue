@@ -37,6 +37,7 @@
 	import masstransitHub from "@/hubs/masstransitHub";
 	import LogIn from "../../components/Account/LogIn.vue";
 	import { useToast } from "vue-toastification";
+	import { useAuthStore } from "../../stores/authStore";
 
 	export default {
 		name: "Register",
@@ -47,8 +48,9 @@
 			LogIn,
 		},
 		setup() {
+			const auth = useAuthStore();
 			const toast = useToast();
-			return { toast };
+			return { toast, auth };
 		},
 		data() {
 			return {
@@ -69,11 +71,10 @@
 					: "container right-panel-active";
 			},
 			login(login) {
-				if (login.loginId > 0) {
-					this.$store.dispatch("addLogin", login);
-					this.$router.push("/dashboard");
-					return;
-				}
+				this.auth.setUserAuth(login.username, login.token, login.loginId);
+				this.$router.push("/dashboard");
+			},
+			noLogin() {
 				this.toast.error("No login found for provided credentials");
 			},
 		},
@@ -81,6 +82,9 @@
 			masstransitHub.start();
 			masstransitHub.client.on("PublishLogin", async (login) => {
 				this.login(login);
+			});
+			masstransitHub.client.on("NoLogin", async () => {
+				this.noLogin();
 			});
 		},
 	};

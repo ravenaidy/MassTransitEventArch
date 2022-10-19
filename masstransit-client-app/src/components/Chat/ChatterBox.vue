@@ -7,6 +7,7 @@
 
 <script>
 	import masstransitChatHub from "@/hubs/masstransitChatHub";
+	import { useAuthStore } from "../../stores/authStore";
 
 	export default {
 		name: "ChatterBox",
@@ -15,12 +16,16 @@
 				message: "",
 			};
 		},
+		setup() {
+			const auth = useAuthStore();
+			return { auth };
+		},
 		methods: {
 			async sendMessage() {
 				const postMessage = {
-					messageId: this.$store.getters.getAuth.loginId,
+					messageId: this.auth.getLoginId,
 					message: this.message,
-					username: this.$store.getters.getAuth.username,
+					username: this.auth.getUserName,
 				};
 
 				masstransitChatHub.client.invoke(

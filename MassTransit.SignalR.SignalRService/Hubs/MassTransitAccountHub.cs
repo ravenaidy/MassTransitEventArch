@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MassTransit.Shared.Infrastructure.Logger;
 using MassTransit.SignalR.SignalRService.DTO;
+using MassTransit.SignalR.SignalRService.Events;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
@@ -28,6 +29,13 @@ namespace MassTransit.SignalR.SignalRService.Hubs
             _logger.LogHubInformation(nameof(SignalRService), nameof(MassTransitAccountHub), nameof(SendLogin),
                 login);
             await Clients.All.SendAsync("PublishLogin", login);
+        }
+        
+        public async Task NoLogin(NoLogin login)
+        {
+            _logger.LogHubInformation(nameof(SignalRService), nameof(MassTransitAccountHub), nameof(NoLogin),
+                login);
+            await Clients.All.SendAsync("NoLogin", login);
         }
 
         public async Task SendNewAccountRequest(NewAccountRequest request)

@@ -13,10 +13,13 @@
 </template>
 
 <script>
-	import masstransitChatHub from "@/hubs/masstransitChatHub";
+	import MasstransitChatHub from "@/hubs/masstransitChatHub";
 	import MessageBox from "@/components/Chat/MessageBox.vue";
 	import ChatterBox from "@/components/Chat/ChatterBox.vue";
 	import MassTransitNav from "@/components/MassTransitNav.vue";
+	import { useAuthStore } from "../stores/authStore";
+	import { useChatStore } from "../stores/chatStore";
+
 	export default {
 		name: "Dashboard",
 		components: {
@@ -24,16 +27,22 @@
 			MessageBox,
 			MassTransitNav,
 		},
+		setup() {
+			const auth = useAuthStore();
+			const chat = useChatStore();
+			return { chat, auth };
+		},
 		created() {
-			if (this.$store.getters.getAuth === undefined) {
+			if (this.auth.getLoginId === undefined) {
 				this.$router.push("/login");
 			}
 		},
 		mounted() {
-			masstransitChatHub.start().then(() => {
-				masstransitChatHub.client.invoke("JoinGroup", "masstransit");
-				masstransitChatHub.client.on("PublishChatMessage", async (message) => {
-					this.$store.dispatch("addMessage", message);
+			const chatHub = new MasstransitChatHub(this.auth.getToken);
+			chatHub.start().then(() => {
+				chatHub.client.invoke("JoinGroup", "masstransit");
+				chatHub.client.on("PublishChatMessage", async (message) => {
+					this.chat.addMessage(message);
 				});
 			});
 		},

@@ -3,22 +3,28 @@
 		v-for="message in getMessages"
 		:key="message.messageId"
 		class="message"
-		:class="[
-			message.username === $store.getters.getAuth.username ? 'me' : 'other',
-		]"
+		:class="[message.username === this.auth.username ? 'me' : 'other']"
 	>
 		{{ message.message }}
 	</div>
 </template>
 
 <script>
+	import { useChatStore } from "../../stores/chatStore";
+	import { useAuthStore } from "../../stores/authStore";
+
 	export default {
 		name: "MessageBox",
 		computed: {
 			getMessages() {
-				console.log(this.$store.getters.allMessages);
-				return this.$store.getters.allMessages;
+				console.log(this.chat.getAllMessages);
+				return this.chat.getAllMessages;
 			},
+		},
+		setup() {
+			const chat = useChatStore();
+			const auth = useAuthStore();
+			return { chat, auth };
 		},
 		data() {
 			return {
