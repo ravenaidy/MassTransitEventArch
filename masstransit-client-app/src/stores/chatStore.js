@@ -2,9 +2,11 @@ import { defineStore } from "pinia";
 
 export const useChatStore = defineStore({
 	id: "chat",
-	state: () => ({
-		messages: [],
-	}),
+	state: () => {
+		return {
+			messages: [],
+		};
+	},
 	actions: {
 		addMessage: (message) => {
 			this.messages.push(message);

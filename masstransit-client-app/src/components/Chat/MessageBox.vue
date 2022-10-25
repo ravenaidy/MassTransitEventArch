@@ -16,8 +16,7 @@
 	export default {
 		name: "MessageBox",
 		computed: {
-			getMessages() {
-				console.log(this.chat.getAllMessages);
+			getMessages() {				
 				return this.chat.getAllMessages;
 			},
 		},

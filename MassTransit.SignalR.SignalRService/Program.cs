@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using MassTransit.SignalR.SignalRService.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,8 +19,6 @@ builder.Host
     .UseSerilog((ctx, log) =>
         log.ReadFrom.Configuration(ctx.Configuration));
 
-builder.Services.AddSignalR();
-
 const string corsPolicy = "defaultPolicy";
 
 var configuration = builder.Configuration;
@@ -34,29 +33,7 @@ builder.Services.AddCors(opt =>
             .AllowCredentials());
 });
 
-builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    .AddJwtBearer(options =>
-    {
-        options.Events = new JwtBearerEvents
-        {
-            OnMessageReceived = context =>
-            {
-                var accessToken = context.Request.Query["access_token"];
-                var path = context.HttpContext.Request.Path;
-                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/masstransitChatHub"))
-                {
-                    context.Token = accessToken;
-                }
-
-                return Task.CompletedTask;
-            }
-        };
-    });
-
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();

@@ -1,9 +1,7 @@
-namespace MassTransit.SignalR.SignalRService.DTO
+namespace MassTransit.SignalR.SignalRService.Events
 {
     public class ChatMessage
     {
-        public int MessageId { get; set; }
-
         public string Message { get; set; }
         
         public string Username { get; set; }

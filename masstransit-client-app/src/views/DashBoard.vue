@@ -13,7 +13,7 @@
 </template>
 
 <script>
-	import MasstransitChatHub from "@/hubs/masstransitChatHub";
+	import masstransitChatHub from "@/hubs/masstransitChatHub";
 	import MessageBox from "@/components/Chat/MessageBox.vue";
 	import ChatterBox from "@/components/Chat/ChatterBox.vue";
 	import MassTransitNav from "@/components/MassTransitNav.vue";
@@ -38,10 +38,9 @@
 			}
 		},
 		mounted() {
-			const chatHub = new MasstransitChatHub(this.auth.getToken);
-			chatHub.start().then(() => {
-				chatHub.client.invoke("JoinGroup", "masstransit");
-				chatHub.client.on("PublishChatMessage", async (message) => {
+			masstransitChatHub.start(this.auth.getToken).then(() => {
+				masstransitChatHub.client.invoke("JoinGroup", "masstransit");
+				masstransitChatHub.client.on("PublishChatMessage", async (message) => {
 					this.chat.addMessage(message);
 				});
 			});

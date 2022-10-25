@@ -23,7 +23,6 @@
 		methods: {
 			async sendMessage() {
 				const postMessage = {
-					messageId: this.auth.getLoginId,
 					message: this.message,
 					username: this.auth.getUserName,
 				};

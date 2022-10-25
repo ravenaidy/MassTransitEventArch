@@ -27,8 +27,8 @@ namespace Masstransit.Api.Auth.Services
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Iat,
                     DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
-                new Claim("UserId", login.UserId.ToString()),
-                new Claim("Username", login.Username)
+                new Claim("userid", login.UserId.ToString()),
+                new Claim("username", login.Username)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfiguration.Key));

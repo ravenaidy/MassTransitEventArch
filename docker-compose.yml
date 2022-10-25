@@ -66,8 +66,7 @@ services:
       - zookeeper
       - kafkabroker
       - kafka-ui
-      - init-kafka
-      - signalrhub
+      - init-kafka      
 
   masstransitclient:
     image: ${DOCKER_REGISTRY-}masstransitclient

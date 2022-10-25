@@ -8,7 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace MassTransit.BFFServices.SignalRWorker.Pipelines;
 
-public class LoggingPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>, IEvent 
+public class LoggingPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TResponse : IEvent
+    where TRequest : IRequest<TResponse>, IEvent 
 {
     private readonly ILogger<LoggingPipeline<TRequest, TResponse>> _logger;
 
@@ -24,7 +26,7 @@ public class LoggingPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, 
 
         if (response is not Unit)
         {
-            _logger.LogHandlerResponse(nameof(BFFServices), nameof(LoggingPipeline<TRequest, TResponse>), nameof(Handle), request);
+            _logger.LogHandlerResponse(nameof(BFFServices), nameof(LoggingPipeline<TRequest, TResponse>), nameof(Handle), response);
         }
 
         return response;
