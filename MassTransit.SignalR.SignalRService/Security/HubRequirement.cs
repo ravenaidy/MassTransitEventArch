@@ -9,6 +9,7 @@ public class HubRequirement : AuthorizationHandler<HubRequirement, HubInvocation
   protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, HubRequirement requirement,
     HubInvocationContext resource)
   {
+    
     context.Succeed(requirement);
     return Task.CompletedTask;
   }

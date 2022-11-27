@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using MassTransit.SignalR.SignalRService.Hubs;
+using MassTransit.SignalR.SignalRService.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,14 @@ builder.Services.AddCors(opt =>
             .AllowAnyMethod()
             .WithOrigins(configuration.GetValue<string>("CorsUrl"))
             .AllowCredentials());
+});
+
+builder.Services
+    .AddAuthentication()
+    .AddHubTokenAuthenticationScheme();
+
+builder.Services.AddAuthorization(options =>
+{
 });
 
 builder.Services.AddSignalR();
