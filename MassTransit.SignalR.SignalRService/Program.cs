@@ -40,6 +40,7 @@ builder.Services
 
 builder.Services.AddAuthorization(options =>
 {
+    
 });
 
 builder.Services.AddSignalR();
